@@ -45,7 +45,7 @@ export const posts: Post[] = [
     slug: "behind-the-lookbook-street-season",
     publishedAt: "2026-10-18",
     excerpt: "We spent a week shooting at golden hour across the city. Here's how the Street Season story came together.",
-    cover: img("s1-cover.jpg", "Street Season lookbook cover", 1600, 1000),
+    cover: img("lb-street-cover.jpg", "Man in a black varsity bomber against a bright yellow wall", 1122, 701),
     body: [
       block("Street Season was shot over seven evenings, chasing the last hour of light across the city."),
       block("No studio, just the street. Every look was styled with pieces from Drop 01 so you can shop exactly what you see."),
@@ -57,7 +57,7 @@ export const posts: Post[] = [
     slug: "our-bosaso-shop-is-open",
     publishedAt: "2026-09-30",
     excerpt: "Come through, try everything on, and say hello. Our first shop is now open in Bosaso.",
-    cover: img("s2-cover.jpg", "Inside the Carwo Bosaso shop", 1600, 1000),
+    cover: img("shop-hero.jpg", "Inside the Carwo shop", 1672, 941),
     body: [
       block("Carwo Bosaso is open. It's our first shop and the home of everything we make."),
       block("Find us on the map from the About page, or message us on WhatsApp and we'll send you directions."),
@@ -226,17 +226,38 @@ export const products: Product[] = seeds.map(([id, name, slug, price, category, 
   ...extra,
 }));
 
-const story = (n: number, title: string, slug: string, season: string, intro: string): LookbookStory => ({
-  _id: `story-${n}`,
-  title,
-  slug,
-  season,
-  intro,
-  cover: img(`s${n}-cover.jpg`, `${title} lookbook cover`, 1600, 1000),
-  slides: [1, 2, 3, 4, 5].map((i) => ({ image: img(`s${n}-${i}.jpg`, `${title} look ${i}`, 1200, 1500), caption: `Look ${i}` })),
-});
+/** A look in a story: photo (4:5 crop in public/fixtures) captioned with the piece it shows. */
+const look = (file: string, w: number, h: number, caption: string, alt: string) => ({ image: img(file, alt, w, h), caption });
 
 export const stories: LookbookStory[] = [
-  story(1, "Street Season", "street-season", "SS27", "Shot across the CBD at golden hour. Oversized cuts, loud colour."),
-  story(2, "Night Shift", "night-shift", "SS27", "After dark in reflective black. Built for the late ones."),
+  {
+    _id: "story-1",
+    title: "Street Season",
+    slug: "street-season",
+    season: "SS27",
+    intro: "Retro kits, bold colour and loose fits — made for the street.",
+    cover: img("lb-street-cover.jpg", "Man in a black varsity bomber, white tee and grey joggers against a bright yellow wall", 1122, 701),
+    slides: [
+      look("lb-street-1.jpg", 864, 1080, "Retro Jerseys", "Man in a long-sleeve gold-and-green retro jersey against a red wall"),
+      look("lb-street-2.jpg", 941, 1176, "Streetwear Essentials", "Man in a black graphic tee and baggy jeans sitting on a red block"),
+      look("lb-street-3.jpg", 864, 1080, "Sky Blue Retro Jersey", "Man holding out a sky-blue retro football jersey with navy panels"),
+      look("lb-street-4.jpg", 922, 1153, "Black & White Retro Jersey", "Man in sunglasses wearing a black retro jersey with white stripes, holding a gold ball"),
+      look("lb-street-5.jpg", 720, 900, "Navy Pinstripe Jersey", "Man sitting on the floor in a navy pinstripe jersey and black trousers"),
+    ],
+  },
+  {
+    _id: "story-2",
+    title: "Night Shift",
+    slug: "night-shift",
+    season: "SS27",
+    intro: "Darker tones, sharp tailoring and gold details — dressed for after dark.",
+    cover: img("lb-night-cover.jpg", "Man in a half claret, half blue jersey sitting in a dark leather armchair", 809, 506),
+    slides: [
+      look("lb-night-1.jpg", 1024, 1280, "Monochrome Quarter-Zip", "Black-and-white photo of a man in sunglasses wearing a black quarter-zip and wide white trousers"),
+      look("lb-night-2.jpg", 1086, 1358, "Striped Knit Polo", "Man in glasses sitting on a wooden chair in a brown striped knit polo and cream trousers"),
+      look("lb-night-3.jpg", 1024, 1280, "Colour-Block Knit Polo", "Man in sunglasses wearing a black, white and beige colour-block knit polo"),
+      look("lb-night-4.jpg", 735, 919, "Black & Gold Concept Jersey", "Black football jersey with a gold tonal pattern on a wooden hanger"),
+      look("lb-night-5.jpg", 589, 736, "Navy & Gold Retro Jersey", "Navy retro football jersey with gold pinstripes on a hanger"),
+    ],
+  },
 ];

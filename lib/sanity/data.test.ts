@@ -50,6 +50,15 @@ describe("data module in fixtures mode", () => {
     }
   });
 
+  it("gives every lookbook story a real cover and photos that exist", async () => {
+    for (const s of await getStories()) {
+      for (const img of [s.cover, ...s.slides.map((x) => x.image)]) {
+        expect(img.url, s.title).toMatch(/^\/fixtures\/lb-/);
+        expect(existsSync(join(process.cwd(), "public", img.url)), img.url).toBe(true);
+      }
+    }
+  });
+
   it("has categories and lookbook stories", async () => {
     expect((await getCategories()).map((c) => c.slug)).toEqual(["jerseys", "smart-casual", "streetwear", "outerwear"]);
     const stories = await getStories();

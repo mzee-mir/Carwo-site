@@ -30,13 +30,13 @@ export default function MotionDemo() {
         ))}
       </HorizontalScroll>
       <PinnedStory
-        media={<Image src="/fixtures/s1-cover.jpg" alt="" fill className="object-cover" />}
+        media={<Image src="/fixtures/lb-street-cover.jpg" alt="" fill className="object-cover" />}
         title={<p className="font-display text-[18vw] leading-none">STREET SEASON</p>}
       />
       <section className="grid gap-8 px-5 py-24 md:grid-cols-2 md:px-12">
         <Reveal variant="mask">
           <Parallax speed={0.4}>
-            <Image src="/fixtures/s1-1.jpg" alt="Look 1" width={1200} height={1500} />
+            <Image src="/fixtures/lb-street-1.jpg" alt="Look 1" width={864} height={1080} />
           </Parallax>
         </Reveal>
         <Reveal>
