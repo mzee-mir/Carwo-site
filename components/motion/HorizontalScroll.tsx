@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { Children, useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "./gsap";
 import { prefersReducedMotion } from "./useMotionPrefs";
 
@@ -36,13 +36,12 @@ export function HorizontalScroll({ children, className = "" }: { children: React
       className={`snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] md:snap-none md:overflow-hidden ${className}`}
     >
       <div ref={track} className="flex w-max gap-3 px-5 md:gap-6 md:px-12">
-        {Array.isArray(children)
-          ? children.map((c, i) => (
-              <div key={i} className="snap-start scroll-ml-5">
-                {c}
-              </div>
-            ))
-          : children}
+        {/* Children.toArray flattens nested arrays (e.g. a .map() next to a single extra item) so every item gets its own snap slot */}
+        {Children.toArray(children).map((c, i) => (
+          <div key={i} className="shrink-0 snap-start scroll-ml-5">
+            {c}
+          </div>
+        ))}
       </div>
     </div>
   );

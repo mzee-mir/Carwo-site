@@ -31,6 +31,18 @@ test("new drop row can be swiped on phones to reach every product", async ({ pag
   await expect(page.getByRole("link", { name: "SEE ALL →" })).toBeInViewport();
 });
 
+test("new drop cards sit side by side in one row", async ({ page }) => {
+  await page.goto("/");
+  const boxes = await page
+    .getByRole("region", { name: "New drop" })
+    .getByRole("article")
+    .evaluateAll((els) => els.map((e) => e.getBoundingClientRect()).map((r) => ({ top: Math.round(r.top), left: Math.round(r.left) })));
+  expect(boxes).toHaveLength(3);
+  expect(new Set(boxes.map((b) => b.top)).size).toBe(1); // same line
+  expect(boxes.map((b) => b.left)).toEqual([...boxes.map((b) => b.left)].sort((a, b) => a - b)); // left to right
+  expect(boxes[1].left).toBeGreaterThan(boxes[0].left);
+});
+
 test("lookbook teaser and social CTA link out", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("link", { name: "Open the lookbook" })).toHaveAttribute("href", "/lookbook");
