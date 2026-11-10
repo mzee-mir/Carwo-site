@@ -30,7 +30,7 @@ test("order button opens WhatsApp with the full order", async ({ page }) => {
   await cart.getByLabel("Your name (optional)").fill("Amina");
   await cart.getByText("Pickup", { exact: true }).click();
   const href = await cart.getByRole("link", { name: /order on whatsapp/i }).getAttribute("href");
-  expect(href).toMatch(/^https:\/\/wa\.me\/252610000000\?text=/);
+  expect(href).toMatch(/^https:\/\/wa\.me\/252906715405\?text=/);
   const text = new URL(href!).searchParams.get("text")!;
   expect(text).toContain("1× Classic Fit — Brown — M — $65");
   expect(text).toContain("Total: $65");

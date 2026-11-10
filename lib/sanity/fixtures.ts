@@ -3,7 +3,7 @@ import type { Branch, Category, Img, LookbookStory, Post, Product, SiteSettings 
 const img = (file: string, alt: string, width = 800, height = 1000): Img => ({ url: `/fixtures/${file}`, alt, width, height });
 
 export const settings: SiteSettings = {
-  whatsappNumber: "+252 61 000 0000",
+  whatsappNumber: "+252 90 671 5405",
   currencyCode: "USD",
   currencySymbol: "$",
   instagramUrl: "https://instagram.com/carwo",
@@ -73,8 +73,8 @@ export const branches: Branch[] = [
     address: "Bosaso, Somalia",
     lat: 11.284851,
     lng: 49.177534,
-    phone: "+252 61 000 0000",
-    whatsappNumber: "+252 61 000 0000",
+    phone: "+252 90 671 5405",
+    whatsappNumber: "+252 90 671 5405",
     hours: "Mon–Sat · 10am–8pm",
     isMain: true,
   },

@@ -10,7 +10,7 @@ test("about page lists branches with map, hours and contact links", async ({ pag
   await expect(card.getByText("Bosaso, Somalia")).toBeVisible();
   await expect(card.getByText("Mon–Sat · 10am–8pm")).toBeVisible();
   await expect(card.getByRole("link", { name: "Open in Maps" })).toHaveAttribute("href", "https://www.google.com/maps/search/?api=1&query=11.284851,49.177534");
-  await expect(card.getByRole("link", { name: "WhatsApp" })).toHaveAttribute("href", /^https:\/\/wa\.me\/252610000000/);
+  await expect(card.getByRole("link", { name: "WhatsApp" })).toHaveAttribute("href", /^https:\/\/wa\.me\/252906715405/);
   await expect(main.getByRole("link", { name: "Instagram" })).toHaveAttribute("href", "https://instagram.com/carwo");
 });
 
