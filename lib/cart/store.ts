@@ -19,6 +19,7 @@ type Persisted = { lines: CartLine[] };
 // Never let a broken or blocked localStorage break the cart: bad data → empty cart, failed writes → ignored.
 const safeStorage: PersistStorage<Persisted> = {
   getItem: (name) => {
+    if (typeof window === "undefined") return null;
     try {
       const raw = localStorage.getItem(name);
       if (!raw) return null;
@@ -29,6 +30,7 @@ const safeStorage: PersistStorage<Persisted> = {
     }
   },
   setItem: (name, value) => {
+    if (typeof window === "undefined") return;
     try {
       localStorage.setItem(name, JSON.stringify(value));
     } catch {
