@@ -55,7 +55,8 @@ export function Hero({ image, video }: { image?: Img; video?: SiteSettings["hero
   return (
     <section ref={ref} aria-label="Intro" className="relative flex h-[calc(100svh-6rem)] min-h-[620px] flex-col justify-end overflow-hidden">
       <div data-hero-media className="absolute inset-0 md:left-[47%]">
-        <SanityImage image={image} sizes="(min-width: 768px) 55vw, 100vw" priority />
+        {/* Focus left of centre: keeps the people/mannequins in frame when the photo is cropped */}
+        <SanityImage image={image} sizes="(min-width: 768px) 55vw, 100vw" priority className="object-[30%_50%]" />
         {video && <HeroVideo video={video} />}
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent md:bg-gradient-to-r md:from-ink md:from-35% md:via-ink/70 md:to-transparent" aria-hidden />

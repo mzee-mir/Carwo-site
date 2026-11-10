@@ -3,32 +3,17 @@ import { test, expect } from "@playwright/test";
 test("hero shows the wordmark and a shop link", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1, name: "Carwo" })).toBeVisible();
-  await expect(page.getByRole("img", { name: /model wearing the carwo/i })).toBeVisible();
   await expect(page.getByRole("link", { name: "Shop the drop" })).toHaveAttribute("href", "/shop");
 });
 
-test("hero video fades in over the photo and actually plays", async ({ page }) => {
+test("hero shows the shop photo, loaded and uncovered", async ({ page }) => {
   await page.goto("/");
   const hero = page.getByRole("region", { name: "Intro" });
-  await expect(hero.getByRole("img", { name: /model wearing the carwo/i })).toBeAttached();
-  const video = hero.locator("video");
-  await expect(video).toHaveCount(1);
-  await expect(video).toHaveClass(/opacity-100/, { timeout: 15_000 });
-  const state = await video.evaluate(async (v: HTMLVideoElement) => {
-    const t0 = v.currentTime;
-    await new Promise((r) => setTimeout(r, 600));
-    return { muted: v.muted, loop: v.loop, advanced: v.currentTime > t0 };
-  });
-  expect(state).toEqual({ muted: true, loop: true, advanced: true });
-});
-
-test("hero keeps just the photo for reduced motion", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
-  const hero = page.getByRole("region", { name: "Intro" });
-  await expect(hero.getByRole("img", { name: /model wearing the carwo/i })).toBeVisible();
+  const photo = hero.getByRole("img", { name: /inside the carwo shop/i });
+  await expect(photo).toBeVisible();
+  await expect.poll(() => photo.evaluate((i: HTMLImageElement) => i.complete && i.naturalWidth)).toBeGreaterThan(0);
   await page.waitForTimeout(800);
-  await expect(hero.locator("video")).toHaveCount(0);
+  await expect(hero.locator("video")).toHaveCount(0); // no video set → nothing covers the photo
 });
 
 test("new drop section lists every new-drop product", async ({ page }) => {

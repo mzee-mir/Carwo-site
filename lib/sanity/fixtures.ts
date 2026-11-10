@@ -7,8 +7,7 @@ export const settings: SiteSettings = {
   currencyCode: "USD",
   currencySymbol: "$",
   instagramUrl: "https://instagram.com/carwo",
-  heroImage: img("hero.jpg", "Model wearing the Carwo Oversized Tee on a city street", 1600, 1000),
-  heroVideo: { url: "/fixtures/hero.webm", mimeType: "video/webm" }, // placeholder loop from scripts/make-hero-video.mjs
+  heroImage: img("shop-hero.jpg", "Inside the Carwo shop: jackets on mannequins and lime-lit shelves of clothes and bags", 1672, 941),
   announcement: "Drop 01 out now ✦ Order on WhatsApp",
   address: "Bosaso, Somalia",
   mapUrl: "https://www.google.com/maps/search/?api=1&query=11.284851,49.177534",
@@ -31,7 +30,7 @@ export const posts: Post[] = [
     slug: "drop-01-is-here",
     publishedAt: "2026-11-01",
     excerpt: "Heavyweight tees, cargo pants and our first hoodie — the full first drop is in store and online now.",
-    cover: img("hero.jpg", "Model wearing pieces from Carwo Drop 01", 1600, 1000),
+    cover: img("shop-hero.jpg", "Pieces from Carwo Drop 01 in the shop", 1672, 941),
     body: [
       block("Drop 01 is finally here. Ten pieces, built heavy and cut loose, made for the streets of Bosaso."),
       block("What's in the drop", "h2"),
