@@ -1,4 +1,4 @@
-import type { Branch, Category, Img, LookbookStory, Product, SiteSettings } from "../types";
+import type { Branch, Category, Img, LookbookStory, Post, Product, SiteSettings } from "../types";
 
 const img = (file: string, alt: string, width = 800, height = 1000): Img => ({ url: `/fixtures/${file}`, alt, width, height });
 
@@ -13,6 +13,57 @@ export const settings: SiteSettings = {
   mapUrl: "https://www.google.com/maps/search/?api=1&query=11.284851,49.177534",
   hours: "Mon–Sat · 10am–8pm",
 };
+
+let k = 0;
+const block = (text: string, style = "normal") => ({
+  _type: "block" as const,
+  _key: `b${k++}`,
+  style,
+  markDefs: [],
+  children: [{ _type: "span" as const, _key: `s${k++}`, text, marks: [] }],
+});
+
+export const posts: Post[] = [
+  {
+    _id: "post-3",
+    title: "Drop 01 is here",
+    slug: "drop-01-is-here",
+    publishedAt: "2026-11-01",
+    excerpt: "Heavyweight tees, cargo pants and our first hoodie — the full first drop is in store and online now.",
+    cover: img("hero.jpg", "Model wearing pieces from Carwo Drop 01", 1600, 1000),
+    body: [
+      block("Drop 01 is finally here. Ten pieces, built heavy and cut loose, made for the streets of Bosaso."),
+      block("What's in the drop", "h2"),
+      block("Oversized tees in black, bone and olive, cargo pants with deep pockets, and the Heavy Hoodie — our first one, and already a favourite in the shop."),
+      block("How to get yours", "h2"),
+      block("Add what you like to your cart and tap Order on WhatsApp. We'll confirm your sizes and have it ready for pickup or delivery."),
+    ],
+  },
+  {
+    _id: "post-2",
+    title: "Behind the lookbook: Street Season",
+    slug: "behind-the-lookbook-street-season",
+    publishedAt: "2026-10-18",
+    excerpt: "We spent a week shooting at golden hour across the city. Here's how the Street Season story came together.",
+    cover: img("s1-cover.jpg", "Street Season lookbook cover", 1600, 1000),
+    body: [
+      block("Street Season was shot over seven evenings, chasing the last hour of light across the city."),
+      block("No studio, just the street. Every look was styled with pieces from Drop 01 so you can shop exactly what you see."),
+    ],
+  },
+  {
+    _id: "post-1",
+    title: "Our Bosaso shop is open",
+    slug: "our-bosaso-shop-is-open",
+    publishedAt: "2026-09-30",
+    excerpt: "Come through, try everything on, and say hello. Our first shop is now open in Bosaso.",
+    cover: img("s2-cover.jpg", "Inside the Carwo Bosaso shop", 1600, 1000),
+    body: [
+      block("Carwo Bosaso is open. It's our first shop and the home of everything we make."),
+      block("Find us on the map from the About page, or message us on WhatsApp and we'll send you directions."),
+    ],
+  },
+];
 
 export const branches: Branch[] = [
   {

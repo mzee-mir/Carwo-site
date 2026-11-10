@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getProduct, getProducts, getProductsByIds, getSettings, getStories, getCategories } from "./data";
+import { getProduct, getProducts, getProductsByIds, getSettings, getStories, getCategories, getPosts, getPost } from "./data";
 
 describe("data module in fixtures mode", () => {
   it("filters products by category", async () => {
@@ -26,6 +26,15 @@ describe("data module in fixtures mode", () => {
     const sold = await getProduct("sold-out-hoodie");
     expect(sold?.sizes.every((s) => !s.inStock)).toBe(true);
   });
+  it("has news posts, newest first, and null for unknown posts", async () => {
+    const posts = await getPosts();
+    expect(posts).toHaveLength(3);
+    const dates = posts.map((p) => p.publishedAt);
+    expect([...dates].sort().reverse()).toEqual(dates);
+    expect((await getPost(posts[0].slug))?.body.length).toBeGreaterThan(0);
+    expect(await getPost("nope")).toBeNull();
+  });
+
   it("has categories and lookbook stories", async () => {
     expect((await getCategories()).map((c) => c.slug)).toEqual(["tees", "hoodies", "bottoms", "accessories"]);
     const stories = await getStories();

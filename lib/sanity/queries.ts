@@ -24,6 +24,9 @@ export const SETTINGS_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
   whatsappNumber, "currencyCode": coalesce(currencyCode, "USD"), "currencySymbol": coalesce(currencySymbol, "$"),
   instagramUrl, "heroImage": heroImage${IMG}, announcement, address, mapUrl, hours
 }`);
+const POST = `{ _id, title, "slug": slug.current, "publishedAt": coalesce(publishedAt, _createdAt), excerpt, "cover": cover${IMG}, "body": coalesce(body, []) }`;
+export const POSTS_QUERY = defineQuery(`*[_type == "post" && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc)${POST}`);
+export const POST_QUERY = defineQuery(`*[_type == "post" && slug.current == $slug][0]${POST}`);
 export const BRANCHES_QUERY = defineQuery(`*[_type == "branch"] | order(coalesce(isMain, false) desc, name asc){
   _id, name, city, address, "lat": location.lat, "lng": location.lng, phone, whatsappNumber, hours, "isMain": coalesce(isMain, false)
 }`);

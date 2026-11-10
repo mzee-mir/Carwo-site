@@ -1,4 +1,6 @@
-export type Img = { url: string; alt: string; lqip?: string; width: number; height: number };
+import type { PortableTextBlock } from "@portabletext/types";
+
+export type Img ={ url: string; alt: string; lqip?: string; width: number; height: number };
 export type Size = { label: string; inStock: boolean };
 export type Colour = { name: string; hex: string };
 export type Category = { _id: string; title: string; slug: string; order: number };
@@ -24,6 +26,15 @@ export type LookbookStory = {
   season?: string;
   intro?: string;
   slides: { image: Img; caption?: string }[];
+};
+export type Post = {
+  _id: string;
+  title: string;
+  slug: string;
+  publishedAt: string; // ISO date
+  excerpt?: string;
+  cover?: Img;
+  body: PortableTextBlock[];
 };
 export type Branch = {
   _id: string;

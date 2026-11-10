@@ -1,4 +1,4 @@
-import type { Branch, Category, LookbookStory, Product, SiteSettings } from "../types";
+import type { Branch, Category, LookbookStory, Post, Product, SiteSettings } from "../types";
 import { client } from "./client";
 import * as fx from "./fixtures";
 import * as q from "./queries";
@@ -12,6 +12,17 @@ async function fetchSanity<T>(query: string, params: Record<string, unknown> = {
 export async function getSettings(): Promise<SiteSettings> {
   if (useFixtures()) return fx.settings;
   return (await fetchSanity<SiteSettings | null>(q.SETTINGS_QUERY)) ?? { currencyCode: "USD", currencySymbol: "$" };
+}
+
+/** News posts, newest first. */
+export async function getPosts(): Promise<Post[]> {
+  if (useFixtures()) return [...fx.posts].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  return fetchSanity<Post[]>(q.POSTS_QUERY);
+}
+
+export async function getPost(slug: string): Promise<Post | null> {
+  if (useFixtures()) return fx.posts.find((p) => p.slug === slug) ?? null;
+  return fetchSanity<Post | null>(q.POST_QUERY, { slug });
 }
 
 /** All branches, main shop first. */

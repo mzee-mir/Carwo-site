@@ -11,6 +11,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           <p className="label text-muted">Shop</p>
           <Link href="/shop">All products</Link>
           <Link href="/lookbook">Lookbook</Link>
+          <Link href="/news">News</Link>
         </div>
         <div className="flex flex-col gap-3">
           <p className="label text-muted">Visit</p>

@@ -45,6 +45,30 @@ export const lookbookStory = defineType({
   ],
 });
 
+export const post = defineType({
+  name: "post",
+  title: "News post",
+  type: "document",
+  fields: [
+    defineField({ name: "title", type: "string", validation: (r) => r.required() }),
+    defineField({ name: "slug", type: "slug", options: { source: "title" }, validation: (r) => r.required() }),
+    defineField({ name: "publishedAt", title: "Date", type: "date", initialValue: () => new Date().toISOString().slice(0, 10), validation: (r) => r.required() }),
+    imageWithAlt("cover", "Cover photo"),
+    defineField({ name: "excerpt", title: "Short summary", type: "text", rows: 3, description: "Shown on the News page and in link previews", validation: (r) => r.max(200) }),
+    defineField({
+      name: "body",
+      title: "Article",
+      type: "array",
+      of: [
+        defineArrayMember({ type: "block", styles: [{ title: "Normal", value: "normal" }, { title: "Heading", value: "h2" }, { title: "Quote", value: "blockquote" }] }),
+        defineArrayMember({ type: "image", options: { hotspot: true }, fields: [defineField({ name: "alt", title: "Describe the photo", type: "string" })] }),
+      ],
+    }),
+  ],
+  orderings: [{ title: "Newest first", name: "dateDesc", by: [{ field: "publishedAt", direction: "desc" }] }],
+  preview: { select: { title: "title", subtitle: "publishedAt", media: "cover" } },
+});
+
 export const branch = defineType({
   name: "branch",
   title: "Branch / office",
@@ -80,4 +104,4 @@ export const siteSettings = defineType({
   preview: { prepare: () => ({ title: "Site settings" }) },
 });
 
-export const schemaTypes = [product, category, lookbookStory, branch, siteSettings];
+export const schemaTypes = [product, category, lookbookStory, post, branch, siteSettings];
