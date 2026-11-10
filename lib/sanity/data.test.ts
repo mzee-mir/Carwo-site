@@ -16,8 +16,9 @@ describe("data module in fixtures mode", () => {
     expect(found).toHaveLength(1);
     expect(found[0]._id).toBe(first._id);
   });
-  it("returns shop settings with KSh currency", async () => {
-    expect((await getSettings()).currencySymbol).toBe("KSh");
+  it("returns shop settings in US dollars at the Bosaso pin", async () => {
+    expect((await getSettings()).currencySymbol).toBe("$");
+    expect((await getSettings()).mapUrl).toContain("11.284851,49.177534");
   });
   it("has new-drop, featured and sold-out fixture products", async () => {
     expect((await getProducts({ newDrop: true })).length).toBeGreaterThanOrEqual(2);

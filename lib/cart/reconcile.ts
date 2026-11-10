@@ -3,7 +3,7 @@ import type { Product } from "../types";
 import type { CartLine } from "./types";
 
 /** Bring a saved cart in line with current product data: drop removed products, update prices, flag sold-out sizes. */
-export function reconcileCart(lines: CartLine[], products: Product[], symbol = "KSh"): { lines: CartLine[]; notices: string[] } {
+export function reconcileCart(lines: CartLine[], products: Product[], symbol = "$"): { lines: CartLine[]; notices: string[] } {
   const byId = new Map(products.map((p) => [p._id, p]));
   const notices: string[] = [];
   const out: CartLine[] = [];

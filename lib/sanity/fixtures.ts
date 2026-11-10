@@ -3,14 +3,14 @@ import type { Category, Img, LookbookStory, Product, SiteSettings } from "../typ
 const img = (file: string, alt: string, width = 800, height = 1000): Img => ({ url: `/fixtures/${file}`, alt, width, height });
 
 export const settings: SiteSettings = {
-  whatsappNumber: "+254 700 000 000",
-  currencyCode: "KES",
-  currencySymbol: "KSh",
+  whatsappNumber: "+252 61 000 0000",
+  currencyCode: "USD",
+  currencySymbol: "$",
   instagramUrl: "https://instagram.com/carwo",
   heroImage: img("hero.jpg", "Model wearing the Carwo Oversized Tee on a city street", 1600, 1000),
   announcement: "Drop 01 out now ✦ Order on WhatsApp",
-  address: "Moi Avenue, Nairobi",
-  mapUrl: "https://maps.google.com/?q=Moi+Avenue+Nairobi",
+  address: "Bosaso, Somalia",
+  mapUrl: "https://www.google.com/maps/search/?api=1&query=11.284851,49.177534",
   hours: "Mon–Sat · 10am–8pm",
 };
 
@@ -35,16 +35,16 @@ const night = { title: "Night Shift", slug: "night-shift" };
 
 type Seed = [id: number, name: string, slug: string, price: number, category: string, extra?: Partial<Product>];
 const seeds: Seed[] = [
-  [1, "Oversized Tee", "oversized-tee", 2500, "tees", { featured: true, newDrop: true, colours: [black, bone, olive], sizes: sizes(["XL"]), collection: street }],
-  [2, "Cargo Pant", "cargo-pant", 4500, "bottoms", { newDrop: true, colours: [olive, black], collection: street }],
-  [3, "Heavy Hoodie", "heavy-hoodie", 5200, "hoodies", { featured: true, newDrop: true, collection: night }],
-  [4, "Bucket Hat", "bucket-hat", 1800, "accessories", { sizes: oneSize }],
-  [5, "Track Jacket", "track-jacket", 6000, "hoodies", { featured: true, collection: night }],
-  [6, "Sold Out Hoodie", "sold-out-hoodie", 5200, "hoodies", { sizes: sizes(["S", "M", "L", "XL", "XXL"]) }],
-  [7, "Logo Tee", "logo-tee", 2200, "tees", { colours: [bone, black] }],
-  [8, "Wide Denim", "wide-denim", 4800, "bottoms"],
-  [9, "Tee & Co. #1", "tee-and-co-1", 2400, "tees"],
-  [10, "Utility Bag", "utility-bag", 3000, "accessories", { sizes: oneSize }],
+  [1, "Oversized Tee", "oversized-tee", 25, "tees", { featured: true, newDrop: true, colours: [black, bone, olive], sizes: sizes(["XL"]), collection: street }],
+  [2, "Cargo Pant", "cargo-pant", 45, "bottoms", { newDrop: true, colours: [olive, black], collection: street }],
+  [3, "Heavy Hoodie", "heavy-hoodie", 52, "hoodies", { featured: true, newDrop: true, collection: night }],
+  [4, "Bucket Hat", "bucket-hat", 18, "accessories", { sizes: oneSize }],
+  [5, "Track Jacket", "track-jacket", 60, "hoodies", { featured: true, collection: night }],
+  [6, "Sold Out Hoodie", "sold-out-hoodie", 52, "hoodies", { sizes: sizes(["S", "M", "L", "XL", "XXL"]) }],
+  [7, "Logo Tee", "logo-tee", 22, "tees", { colours: [bone, black] }],
+  [8, "Wide Denim", "wide-denim", 48, "bottoms"],
+  [9, "Tee & Co. #1", "tee-and-co-1", 24, "tees"],
+  [10, "Utility Bag", "utility-bag", 30, "accessories", { sizes: oneSize }],
 ];
 
 export const products: Product[] = seeds.map(([id, name, slug, price, category, extra = {}]) => ({

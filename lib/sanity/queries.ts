@@ -21,7 +21,7 @@ const STORY = `{
 }`;
 
 export const SETTINGS_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
-  whatsappNumber, "currencyCode": coalesce(currencyCode, "KES"), "currencySymbol": coalesce(currencySymbol, "KSh"),
+  whatsappNumber, "currencyCode": coalesce(currencyCode, "USD"), "currencySymbol": coalesce(currencySymbol, "$"),
   instagramUrl, "heroImage": heroImage${IMG}, announcement, address, mapUrl, hours
 }`);
 export const CATEGORIES_QUERY = defineQuery(`*[_type == "category"] | order(order asc){ _id, title, "slug": slug.current, order }`);

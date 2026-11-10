@@ -50,9 +50,9 @@ export const siteSettings = defineType({
   title: "Site settings",
   type: "document",
   fields: [
-    defineField({ name: "whatsappNumber", title: "WhatsApp number", type: "string", description: "International format, e.g. +254 712 345 678" }),
-    defineField({ name: "currencyCode", type: "string", initialValue: "KES" }),
-    defineField({ name: "currencySymbol", type: "string", initialValue: "KSh" }),
+    defineField({ name: "whatsappNumber", title: "WhatsApp number", type: "string", description: "International format, e.g. +252 61 234 5678" }),
+    defineField({ name: "currencyCode", type: "string", initialValue: "USD" }),
+    defineField({ name: "currencySymbol", type: "string", initialValue: "$" }),
     defineField({ name: "instagramUrl", title: "Instagram link", type: "url" }),
     imageWithAlt("heroImage", "Home page hero photo"),
     defineField({ name: "announcement", title: "Announcement bar text", type: "string" }),

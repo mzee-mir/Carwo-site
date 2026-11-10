@@ -7,7 +7,7 @@ export const product = defineType({
   fields: [
     defineField({ name: "name", type: "string", validation: (r) => r.required() }),
     defineField({ name: "slug", type: "slug", options: { source: "name" }, validation: (r) => r.required() }),
-    defineField({ name: "price", type: "number", description: "Price in your currency, no symbol (e.g. 2500)", validation: (r) => r.required().min(0) }),
+    defineField({ name: "price", type: "number", description: "Price in US dollars, numbers only (e.g. 25 or 24.50)", validation: (r) => r.required().min(0) }),
     defineField({ name: "category", type: "reference", to: [{ type: "category" }], validation: (r) => r.required() }),
     defineField({ name: "collection", type: "reference", to: [{ type: "lookbookStory" }] }),
     defineField({

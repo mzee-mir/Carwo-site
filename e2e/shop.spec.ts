@@ -39,7 +39,7 @@ test("adding without a size asks for one", async ({ page }) => {
 test("ask on WhatsApp links to the shop number", async ({ page }) => {
   await page.goto("/product/oversized-tee");
   const link = page.getByRole("link", { name: /ask about this on whatsapp/i });
-  await expect(link).toHaveAttribute("href", /^https:\/\/wa\.me\/254700000000\?text=/);
+  await expect(link).toHaveAttribute("href", /^https:\/\/wa\.me\/252610000000\?text=/);
 });
 
 test("unknown product returns 404", async ({ page }) => {

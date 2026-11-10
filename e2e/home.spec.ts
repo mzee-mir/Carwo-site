@@ -35,7 +35,7 @@ test("lookbook teaser and social CTA link out", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("link", { name: "Open the lookbook" })).toHaveAttribute("href", "/lookbook");
   const cta = page.getByRole("region", { name: "Order on WhatsApp" });
-  await expect(cta.getByRole("link", { name: "Chat on WhatsApp" })).toHaveAttribute("href", /^https:\/\/wa\.me\/254700000000/);
+  await expect(cta.getByRole("link", { name: "Chat on WhatsApp" })).toHaveAttribute("href", /^https:\/\/wa\.me\/252610000000/);
   await expect(cta.getByRole("link", { name: "Instagram" })).toBeVisible();
 });
 

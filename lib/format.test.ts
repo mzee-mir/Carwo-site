@@ -8,7 +8,12 @@ const product = (sizes: Product["sizes"]): Product => ({
 });
 
 describe("formatPrice", () => {
-  it("formats with symbol, space and thousands separator", () => {
+  it("writes dollars like $25, with cents only when needed", () => {
+    expect(formatPrice(25, { currencySymbol: "$" })).toBe("$25");
+    expect(formatPrice(24.5, { currencySymbol: "$" })).toBe("$24.50");
+    expect(formatPrice(1250, { currencySymbol: "$" })).toBe("$1,250");
+  });
+  it("puts a space after letter symbols such as KSh", () => {
     expect(formatPrice(2500, { currencySymbol: "KSh" })).toBe("KSh 2,500");
     expect(formatPrice(11500, { currencySymbol: "KSh" })).toBe("KSh 11,500");
   });

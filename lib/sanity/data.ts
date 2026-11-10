@@ -11,7 +11,7 @@ async function fetchSanity<T>(query: string, params: Record<string, unknown> = {
 
 export async function getSettings(): Promise<SiteSettings> {
   if (useFixtures()) return fx.settings;
-  return (await fetchSanity<SiteSettings | null>(q.SETTINGS_QUERY)) ?? { currencyCode: "KES", currencySymbol: "KSh" };
+  return (await fetchSanity<SiteSettings | null>(q.SETTINGS_QUERY)) ?? { currencyCode: "USD", currencySymbol: "$" };
 }
 
 export async function getCategories(): Promise<Category[]> {
