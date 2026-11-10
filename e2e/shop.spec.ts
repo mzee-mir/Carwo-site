@@ -2,13 +2,13 @@ import { test, expect } from "@playwright/test";
 
 test("shop lists every product and filters by category", async ({ page }) => {
   await page.goto("/shop");
-  await expect(page.getByRole("article")).toHaveCount(10);
+  await expect(page.getByRole("article")).toHaveCount(13);
   await page.getByRole("link", { name: "Tees", exact: true }).click();
   await expect(page).toHaveURL(/\/shop\?category=tees$/);
-  await expect(page.getByRole("article")).toHaveCount(3);
+  await expect(page.getByRole("article")).toHaveCount(4);
   await page.getByRole("link", { name: "All", exact: true }).click();
   await expect(page).toHaveURL(/\/shop$/);
-  await expect(page.getByRole("article")).toHaveCount(10);
+  await expect(page.getByRole("article")).toHaveCount(13);
 });
 
 test("sold-out product shows a badge and cannot be added", async ({ page }) => {

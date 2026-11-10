@@ -19,8 +19,17 @@ test("hero shows the shop photo, loaded and uncovered", async ({ page }) => {
 test("new drop section lists every new-drop product", async ({ page }) => {
   await page.goto("/");
   const section = page.getByRole("region", { name: "New drop" });
-  for (const name of ["Oversized Tee", "Cargo Pant", "Heavy Hoodie"]) {
-    await expect(section.getByRole("heading", { name })).toBeAttached();
+  const names = ["Retro Jerseys", "Classic Fit", "Streetwear Essentials"];
+  await expect(section.getByRole("article").getByRole("heading")).toHaveText(names); // exactly these, in this order
+  for (const [name, alt] of [
+    ["Retro Jerseys", /retro brazil jersey/i],
+    ["Classic Fit", /checked knit vest/i],
+    ["Streetwear Essentials", /black graphic tee and baggy jeans/i],
+  ] as const) {
+    const card = section.getByRole("article").filter({ has: page.getByRole("heading", { name }) });
+    const photo = card.getByRole("img", { name: alt });
+    await expect(photo).toBeAttached();
+    await expect.poll(() => photo.evaluate((i: HTMLImageElement) => i.complete && i.naturalWidth)).toBeGreaterThan(0);
   }
 });
 

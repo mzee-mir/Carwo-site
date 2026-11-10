@@ -101,9 +101,28 @@ const night = { title: "Night Shift", slug: "night-shift" };
 
 type Seed = [id: number, name: string, slug: string, price: number, category: string, extra?: Partial<Product>];
 const seeds: Seed[] = [
-  [1, "Oversized Tee", "oversized-tee", 25, "tees", { featured: true, newDrop: true, colours: [black, bone, olive], sizes: sizes(["XL"]), collection: street }],
-  [2, "Cargo Pant", "cargo-pant", 45, "bottoms", { newDrop: true, colours: [olive, black], collection: street }],
-  [3, "Heavy Hoodie", "heavy-hoodie", 52, "hoodies", { featured: true, newDrop: true, collection: night }],
+  // New drop (real photos, in display order)
+  [11, "Retro Jerseys", "retro-jerseys", 45, "tees", {
+    newDrop: true,
+    colours: [{ name: "Gold", hex: "#e2b021" }],
+    images: [img("nd-retro-jerseys.jpg", "Man in a long-sleeve gold-and-green retro Brazil jersey against a red wall", 864, 1080)],
+    description: "Long-sleeve retro football jerseys with a woven-pattern finish, contrast collar and striped sleeves.",
+  }],
+  [12, "Classic Fit", "classic-fit", 65, "bottoms", {
+    newDrop: true,
+    colours: [{ name: "Brown", hex: "#5a3a22" }, { name: "Navy", hex: "#1f2a44" }],
+    images: [img("nd-classic-fit.jpg", "Man in a brown and navy checked knit vest, light blue shirt and brown trousers", 1000, 1250)],
+    description: "Smart-casual layers: checked knit vest, crisp shirt and tailored wool-blend trousers.",
+  }],
+  [13, "Streetwear Essentials", "streetwear-essentials", 55, "bottoms", {
+    newDrop: true,
+    colours: [black, { name: "Light denim", hex: "#9fb3cf" }],
+    images: [img("nd-streetwear.jpg", "Man in a black graphic tee and baggy jeans sitting on a red block", 941, 1176)],
+    description: "The everyday uniform: heavyweight graphic tee and loose, wide-leg washed denim.",
+  }],
+  [1, "Oversized Tee", "oversized-tee", 25, "tees", { featured: true, colours: [black, bone, olive], sizes: sizes(["XL"]), collection: street }],
+  [2, "Cargo Pant", "cargo-pant", 45, "bottoms", { colours: [olive, black], collection: street }],
+  [3, "Heavy Hoodie", "heavy-hoodie", 52, "hoodies", { featured: true, collection: night }],
   [4, "Bucket Hat", "bucket-hat", 18, "accessories", { sizes: oneSize }],
   [5, "Track Jacket", "track-jacket", 60, "hoodies", { featured: true, collection: night }],
   [6, "Sold Out Hoodie", "sold-out-hoodie", 52, "hoodies", { sizes: sizes(["S", "M", "L", "XL", "XXL"]) }],
