@@ -17,7 +17,7 @@ export function CartLineRow({ line, symbol, onNavigate }: { line: CartLine; symb
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
         <div className="flex items-start justify-between gap-2">
           <p className="truncate font-display text-xl">{line.name}</p>
-          <button type="button" onClick={() => remove(line.key)} aria-label={`Remove ${line.name}`} className="text-muted hover:text-paper">
+          <button type="button" onClick={() => remove(line.key)} aria-label={`Remove ${line.name}`} className="-mt-2.5 -mr-3 flex size-11 shrink-0 items-center justify-center text-muted hover:text-paper">
             ✕
           </button>
         </div>
@@ -26,13 +26,13 @@ export function CartLineRow({ line, symbol, onNavigate }: { line: CartLine; symb
           {line.unavailable && <span className="ml-2 text-danger">Sold out — not included</span>}
         </p>
         <div className="mt-auto flex items-center justify-between">
-          <div className="flex items-center gap-3.5 border border-ink-3 px-2.5 py-1.5">
+          <div className="flex items-center border border-ink-3">
             <button
               type="button"
               aria-label={`Decrease ${line.name}`}
               disabled={line.quantity <= 1}
               onClick={() => setQuantity(line.key, line.quantity - 1)}
-              className="disabled:opacity-30"
+              className="flex size-11 items-center justify-center text-lg disabled:opacity-30"
             >
               −
             </button>
@@ -44,7 +44,7 @@ export function CartLineRow({ line, symbol, onNavigate }: { line: CartLine; symb
               aria-label={`Increase ${line.name}`}
               disabled={line.quantity >= MAX_QTY}
               onClick={() => setQuantity(line.key, line.quantity + 1)}
-              className="disabled:opacity-30"
+              className="flex size-11 items-center justify-center text-lg disabled:opacity-30"
             >
               +
             </button>

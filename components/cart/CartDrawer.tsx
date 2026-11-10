@@ -94,7 +94,7 @@ export function CartDrawer({ settings }: { settings: SiteSettings }) {
           >
             <div className="flex items-center justify-between border-b border-ink-3 px-6 py-5">
               <h2 className="font-display text-3xl">Your cart ({cartCount(lines)})</h2>
-              <button type="button" onClick={close} aria-label="Close cart" data-autofocus>
+              <button type="button" onClick={close} aria-label="Close cart" data-autofocus className="-mr-2.5 flex size-11 items-center justify-center">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" strokeWidth="2" />
                 </svg>

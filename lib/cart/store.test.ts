@@ -84,6 +84,19 @@ describe("cart store", () => {
     expect(useCart.getState().lines).toEqual([]);
   });
 
+  it("drops malformed saved lines and clamps saved quantities", async () => {
+    const good = { key: "a|M|Black", productId: "a", slug: "a", name: "A", size: "M", colour: "Black", quantity: 999, unitPrice: 1000 };
+    const noQty = { key: "b|M|Black", productId: "b", slug: "b", name: "B", size: "M", colour: "Black", unitPrice: 500 };
+    localStorage.setItem("carwo-cart", JSON.stringify({ state: { lines: [null, "x", noQty, good, { productId: 5 }] }, version: 0 }));
+    const { useCart, cartCount } = await freshStore();
+    await useCart.persist.rehydrate();
+    const lines = useCart.getState().lines;
+    expect(lines.map((l) => l.productId)).toEqual(["b", "a"]);
+    expect(lines[0].quantity).toBe(1);
+    expect(lines[1].quantity).toBe(10);
+    expect(() => cartCount(lines)).not.toThrow();
+  });
+
   it("still updates state when localStorage throws", async () => {
     vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
       throw new Error("QuotaExceeded");

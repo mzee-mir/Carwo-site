@@ -6,6 +6,7 @@ import { AskOnWhatsApp } from "@/components/shop/AskOnWhatsApp";
 import { Gallery } from "@/components/shop/Gallery";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { formatPrice } from "@/lib/format";
+import { moreLikeThis } from "@/lib/related";
 import { getProduct, getProducts, getSettings } from "@/lib/sanity/data";
 
 export const revalidate = 60;
@@ -30,8 +31,8 @@ export default async function ProductPage({ params }: Params) {
   const { slug } = await params;
   const [product, settings] = await Promise.all([getProduct(slug), getSettings()]);
   if (!product) notFound();
-  const related = (await getProducts({ category: product.category.slug })).filter((p) => p._id !== product._id);
-  const more = related.length >= 4 ? related : [...related, ...(await getProducts()).filter((p) => p._id !== product._id && !related.includes(p))];
+  const [sameCategory, all] = await Promise.all([getProducts({ category: product.category.slug }), getProducts()]);
+  const more = moreLikeThis(product, sameCategory, all, 4);
   const symbol = settings.currencySymbol;
   return (
     <>
@@ -65,7 +66,7 @@ export default async function ProductPage({ params }: Params) {
       <section className="pb-24 md:pb-32">
         <h2 className="px-5 pb-6 font-display text-4xl md:px-12 md:pb-8 md:text-7xl">YOU MIGHT ALSO LIKE</h2>
         <div className="flex gap-3 overflow-x-auto px-5 [scrollbar-width:none] md:grid md:grid-cols-4 md:gap-6 md:px-12">
-          {more.slice(0, 4).map((p) => (
+          {more.map((p) => (
             <div key={p._id} className="w-52 shrink-0 md:w-auto">
               <ProductCard product={p} symbol={symbol} />
             </div>

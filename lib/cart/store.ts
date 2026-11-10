@@ -16,6 +16,19 @@ export const cartTotal = (lines: CartLine[]) => lines.filter((l) => !l.unavailab
 
 type Persisted = { lines: CartLine[] };
 
+const isStr = (v: unknown): v is string => typeof v === "string";
+
+/** Keep only well-formed saved lines (old versions, hand-edited or corrupted storage) and clamp their quantities. */
+function sanitizeLines(raw: unknown[]): CartLine[] {
+  return raw.flatMap((l) => {
+    if (!l || typeof l !== "object") return [];
+    const x = l as Record<string, unknown>;
+    if (![x.key, x.productId, x.size, x.colour].every(isStr) || typeof x.unitPrice !== "number" || !Number.isFinite(x.unitPrice)) return [];
+    const quantity = typeof x.quantity === "number" && Number.isFinite(x.quantity) ? clamp(x.quantity) : 1;
+    return [{ ...(x as unknown as CartLine), name: isStr(x.name) ? x.name : "Item", slug: isStr(x.slug) ? x.slug : "", quantity }];
+  });
+}
+
 // Never let a broken or blocked localStorage break the cart: bad data → empty cart, failed writes → ignored.
 const safeStorage: PersistStorage<Persisted> = {
   getItem: (name) => {
@@ -24,7 +37,8 @@ const safeStorage: PersistStorage<Persisted> = {
       const raw = localStorage.getItem(name);
       if (!raw) return null;
       const parsed = JSON.parse(raw) as StorageValue<Persisted>;
-      return Array.isArray(parsed?.state?.lines) ? parsed : null;
+      if (!Array.isArray(parsed?.state?.lines)) return null;
+      return { ...parsed, state: { lines: sanitizeLines(parsed.state.lines) } };
     } catch {
       return null;
     }

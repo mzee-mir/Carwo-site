@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState, type ReactNode } from "react";
 
 const links = [
   { href: "/shop", label: "Shop" },
@@ -11,6 +12,20 @@ const links = [
 
 export function Header({ cartSlot }: { cartSlot?: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  // Close the mobile menu whenever the page changes (logo, nav, any link) …
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setOpen(false);
+  }
+  // … and on Escape.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
   return (
     <header className="sticky top-0 z-40 border-b border-ink-3 bg-ink/90 backdrop-blur">
       <div className="flex h-16 items-center justify-between px-5 md:px-12">

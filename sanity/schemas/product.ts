@@ -26,6 +26,8 @@ export const product = defineType({
     defineField({
       name: "sizes",
       type: "array",
+      description: 'Add every size. For caps, bags etc. add a single size called "One size". Switch "In stock" off when a size sells out.',
+      validation: (r) => r.min(1).error("Add at least one size (use \"One size\" for accessories)"),
       of: [
         defineArrayMember({
           type: "object",
