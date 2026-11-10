@@ -15,6 +15,22 @@ test("new drop section lists every new-drop product", async ({ page }) => {
   }
 });
 
+test("new drop row can be swiped on phones to reach every product", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "desktop uses scroll-driven pinning instead");
+  await page.goto("/");
+  const row = page.getByRole("region", { name: "New drop" }).locator("[data-pinned]");
+  await row.evaluate((el) => window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 100));
+  const scrolled = await row.evaluate(async (el) => {
+    el.scrollLeft = 10_000;
+    await new Promise((r) => setTimeout(r, 100));
+    return { scrollLeft: el.scrollLeft, overflows: el.scrollWidth > el.clientWidth, overflowX: getComputedStyle(el).overflowX };
+  });
+  expect(scrolled.overflows).toBe(true);
+  expect(["auto", "scroll"]).toContain(scrolled.overflowX); // a finger can only swipe a scrollable box
+  expect(scrolled.scrollLeft).toBeGreaterThan(0);
+  await expect(page.getByRole("link", { name: "SEE ALL →" })).toBeInViewport();
+});
+
 test("lookbook teaser and social CTA link out", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("link", { name: "Open the lookbook" })).toHaveAttribute("href", "/lookbook");

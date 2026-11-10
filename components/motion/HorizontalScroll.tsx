@@ -6,7 +6,7 @@ import { prefersReducedMotion } from "./useMotionPrefs";
 
 /**
  * Desktop: pins the section and slides the row sideways as you scroll down.
- * Phones / reduced motion: a normal swipeable row.
+ * Phones / reduced motion: a normal swipeable row (the section itself is the scroll box).
  */
 export function HorizontalScroll({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const section = useRef<HTMLDivElement>(null);
@@ -29,9 +29,20 @@ export function HorizontalScroll({ children, className = "" }: { children: React
     { scope: section },
   );
   return (
-    <div ref={section} data-pinned className={`overflow-hidden ${className}`}>
-      <div ref={track} className="flex w-max gap-3 overflow-x-auto px-5 md:gap-6 md:overflow-visible md:px-12 [scrollbar-width:none]">
-        {children}
+    <div
+      ref={section}
+      data-pinned
+      data-lenis-prevent-wheel
+      className={`snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] md:snap-none md:overflow-hidden ${className}`}
+    >
+      <div ref={track} className="flex w-max gap-3 px-5 md:gap-6 md:px-12">
+        {Array.isArray(children)
+          ? children.map((c, i) => (
+              <div key={i} className="snap-start scroll-ml-5">
+                {c}
+              </div>
+            ))
+          : children}
       </div>
     </div>
   );
