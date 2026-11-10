@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { getProduct, getProducts, getProductsByIds, getSettings, getStories, getCategories, getPosts, getPost } from "./data";
 
 describe("data module in fixtures mode", () => {
   it("filters products by category", async () => {
-    const tees = await getProducts({ category: "tees" });
+    const tees = await getProducts({ category: "jerseys" });
     expect(tees.length).toBeGreaterThan(0);
-    expect(tees.every((p) => p.category.slug === "tees")).toBe(true);
+    expect(tees.every((p) => p.category.slug === "jerseys")).toBe(true);
   });
   it("returns null for an unknown product slug", async () => {
     expect(await getProduct("nope")).toBeNull();
@@ -23,7 +25,7 @@ describe("data module in fixtures mode", () => {
   it("has new-drop, featured and sold-out fixture products", async () => {
     expect((await getProducts({ newDrop: true })).length).toBeGreaterThanOrEqual(2);
     expect((await getProducts({ featured: true })).length).toBeGreaterThanOrEqual(3);
-    const sold = await getProduct("sold-out-hoodie");
+    const sold = await getProduct("green-tile-concept-jersey");
     expect(sold?.sizes.every((s) => !s.inStock)).toBe(true);
   });
   it("has news posts, newest first, and null for unknown posts", async () => {
@@ -35,8 +37,21 @@ describe("data module in fixtures mode", () => {
     expect(await getPost("nope")).toBeNull();
   });
 
+  it("gives every product a real photo (no grey placeholders)", async () => {
+    const all = await getProducts();
+    expect(all).toHaveLength(17);
+    for (const p of all) {
+      expect(p.images.length, p.name).toBeGreaterThan(0);
+      for (const img of p.images) {
+        expect(img.url, p.name).not.toMatch(/\/fixtures\/p\d+-[ab]\.jpg$/); // old generated placeholders
+        expect(existsSync(join(process.cwd(), "public", img.url)), img.url).toBe(true);
+        expect(img.alt.length, p.name).toBeGreaterThan(10);
+      }
+    }
+  });
+
   it("has categories and lookbook stories", async () => {
-    expect((await getCategories()).map((c) => c.slug)).toEqual(["tees", "hoodies", "bottoms", "accessories"]);
+    expect((await getCategories()).map((c) => c.slug)).toEqual(["jerseys", "smart-casual", "streetwear", "outerwear"]);
     const stories = await getStories();
     expect(stories).toHaveLength(2);
     expect(stories[0].slides).toHaveLength(5);

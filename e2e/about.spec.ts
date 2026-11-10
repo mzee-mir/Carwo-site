@@ -15,7 +15,7 @@ test("about page lists branches with map, hours and contact links", async ({ pag
 });
 
 test("cart sends the order to the Bosaso branch", async ({ page }) => {
-  await page.goto("/product/oversized-tee");
+  await page.goto("/product/classic-fit");
   await page.getByRole("button", { name: "M", exact: true }).click();
   await page.getByRole("button", { name: /add to cart/i }).click();
   const cart = page.getByRole("dialog", { name: "Cart" });

@@ -8,38 +8,38 @@ async function addToCart(page: Page, slug: string, size: string) {
 }
 
 test("drawer shows lines, updates quantities and total, removes lines", async ({ page }) => {
-  await addToCart(page, "oversized-tee", "M");
+  await addToCart(page, "classic-fit", "M");
   await page.getByRole("button", { name: "Close cart" }).click();
-  await addToCart(page, "logo-tee", "L");
+  await addToCart(page, "sky-blue-retro-jersey", "L");
   const cart = page.getByRole("dialog", { name: "Cart" });
-  await expect(cart.getByTestId("cart-total")).toHaveText("$47");
-  await cart.getByRole("button", { name: "Increase Oversized Tee" }).click();
-  await expect(cart.getByTestId("cart-total")).toHaveText("$72");
-  await cart.getByRole("button", { name: "Decrease Oversized Tee" }).click();
-  await expect(cart.getByTestId("cart-total")).toHaveText("$47");
-  await cart.getByRole("button", { name: "Remove Logo Tee" }).click();
-  await expect(cart.getByTestId("cart-total")).toHaveText("$25");
-  await cart.getByRole("button", { name: "Remove Oversized Tee" }).click();
+  await expect(cart.getByTestId("cart-total")).toHaveText("$105");
+  await cart.getByRole("button", { name: "Increase Classic Fit" }).click();
+  await expect(cart.getByTestId("cart-total")).toHaveText("$170");
+  await cart.getByRole("button", { name: "Decrease Classic Fit" }).click();
+  await expect(cart.getByTestId("cart-total")).toHaveText("$105");
+  await cart.getByRole("button", { name: "Remove Sky Blue Retro Jersey" }).click();
+  await expect(cart.getByTestId("cart-total")).toHaveText("$65");
+  await cart.getByRole("button", { name: "Remove Classic Fit" }).click();
   await expect(cart.getByText("Your cart is empty")).toBeVisible();
   await expect(cart.getByRole("link", { name: "Shop now" })).toHaveAttribute("href", "/shop");
 });
 
 test("order button opens WhatsApp with the full order", async ({ page }) => {
-  await addToCart(page, "oversized-tee", "M");
+  await addToCart(page, "classic-fit", "M");
   const cart = page.getByRole("dialog", { name: "Cart" });
   await cart.getByLabel("Your name (optional)").fill("Amina");
   await cart.getByText("Pickup", { exact: true }).click();
   const href = await cart.getByRole("link", { name: /order on whatsapp/i }).getAttribute("href");
   expect(href).toMatch(/^https:\/\/wa\.me\/252610000000\?text=/);
   const text = new URL(href!).searchParams.get("text")!;
-  expect(text).toContain("1× Oversized Tee — Black — M — $25");
-  expect(text).toContain("Total: $25");
+  expect(text).toContain("1× Classic Fit — Brown — M — $65");
+  expect(text).toContain("Total: $65");
   expect(text).toContain("Name: Amina");
   expect(text).toContain("Delivery/Pickup: Pickup");
 });
 
 test("cart survives a reload", async ({ page }) => {
-  await addToCart(page, "oversized-tee", "M");
+  await addToCart(page, "classic-fit", "M");
   await page.reload();
   await expect(page.getByRole("button", { name: /cart, 1 item/i })).toBeVisible();
 });

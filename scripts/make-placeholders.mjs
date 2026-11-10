@@ -19,12 +19,8 @@ async function make(file, w, h, label, i) {
   await sharp(Buffer.from(svg)).jpeg({ quality: 70 }).toFile(fileURLToPath(new URL(file, out)));
 }
 
+// Products and the hero use the client's real photos; only the lookbook stories still use placeholders.
 let i = 0;
-await make("hero.jpg", 1600, 1000, "HERO PHOTO", i++);
-for (let p = 1; p <= 10; p++) {
-  await make(`p${p}-a.jpg`, 800, 1000, "PHOTO", i++);
-  await make(`p${p}-b.jpg`, 800, 1000, "PHOTO · BACK", i++);
-}
 for (const s of [1, 2]) {
   await make(`s${s}-cover.jpg`, 1600, 1000, `STORY ${s} COVER`, i++);
   for (let n = 1; n <= 5; n++) await make(`s${s}-${n}.jpg`, 1200, 1500, `LOOK ${n}`, i++);

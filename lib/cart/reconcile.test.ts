@@ -3,9 +3,9 @@ import { products } from "../sanity/fixtures";
 import type { CartLine } from "./types";
 import { reconcileCart } from "./reconcile";
 
-const tee = products.find((p) => p.slug === "oversized-tee")!;
+const tee = products.find((p) => p.slug === "classic-fit")!;
 const line = (extra: Partial<CartLine> = {}): CartLine => ({
-  key: `${tee._id}|M|Black`, productId: tee._id, slug: tee.slug, name: tee.name, size: "M", colour: "Black", quantity: 1, unitPrice: tee.price, ...extra,
+  key: `${tee._id}|M|Brown`, productId: tee._id, slug: tee.slug, name: tee.name, size: "M", colour: "Brown", quantity: 1, unitPrice: tee.price, ...extra,
 });
 
 describe("reconcileCart", () => {
@@ -24,13 +24,13 @@ describe("reconcileCart", () => {
   it("updates changed prices", () => {
     const r = reconcileCart([line({ unitPrice: 2000 })], [{ ...tee, price: 3000 }], "KSh");
     expect(r.lines[0].unitPrice).toBe(3000);
-    expect(r.notices).toEqual(["Oversized Tee price updated to KSh 3,000."]);
+    expect(r.notices).toEqual(["Classic Fit price updated to KSh 3,000."]);
   });
 
   it("flags sizes that sold out", () => {
-    const r = reconcileCart([line({ size: "XL", key: `${tee._id}|XL|Black` })], products);
+    const r = reconcileCart([line({ size: "XL", key: `${tee._id}|XL|Brown` })], products);
     expect(r.lines[0].unavailable).toBe(true);
-    expect(r.notices).toEqual(["Oversized Tee (XL) is sold out."]);
+    expect(r.notices).toEqual(["Classic Fit (XL) is sold out."]);
   });
 
   it("clears the flag when the size is back in stock", () => {

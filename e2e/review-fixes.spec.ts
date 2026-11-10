@@ -1,12 +1,12 @@
 import { test, expect } from "@playwright/test";
 
 test("cart controls are at least 44px tap targets", async ({ page }) => {
-  await page.goto("/product/oversized-tee");
+  await page.goto("/product/classic-fit");
   await page.getByRole("button", { name: "M", exact: true }).click();
   await page.getByRole("button", { name: /add to cart/i }).click();
-  await page.getByRole("button", { name: "Increase Oversized Tee" }).click();
+  await page.getByRole("button", { name: "Increase Classic Fit" }).click();
   const cart = page.getByRole("dialog", { name: "Cart" });
-  for (const name of ["Increase Oversized Tee", "Decrease Oversized Tee", "Remove Oversized Tee", "Close cart"]) {
+  for (const name of ["Increase Classic Fit", "Decrease Classic Fit", "Remove Classic Fit", "Close cart"]) {
     const box = await cart.getByRole("button", { name }).boundingBox();
     expect(box, name).not.toBeNull();
     expect(box!.width, name).toBeGreaterThanOrEqual(44);

@@ -29,12 +29,12 @@ export const posts: Post[] = [
     title: "Drop 01 is here",
     slug: "drop-01-is-here",
     publishedAt: "2026-11-01",
-    excerpt: "Heavyweight tees, cargo pants and our first hoodie — the full first drop is in store and online now.",
+    excerpt: "Retro jerseys, smart-casual layers and streetwear staples — the first drop is in store and online now.",
     cover: img("shop-hero.jpg", "Pieces from Carwo Drop 01 in the shop", 1672, 941),
     body: [
       block("Drop 01 is finally here. Ten pieces, built heavy and cut loose, made for the streets of Bosaso."),
       block("What's in the drop", "h2"),
-      block("Oversized tees in black, bone and olive, cargo pants with deep pockets, and the Heavy Hoodie — our first one, and already a favourite in the shop."),
+      block("Retro football jerseys, the Classic Fit knit-vest look and our Streetwear Essentials — tee, baggy denim and clean sneakers."),
       block("How to get yours", "h2"),
       block("Add what you like to your cart and tap Order on WhatsApp. We'll confirm your sizes and have it ready for pickup or delivery."),
     ],
@@ -81,10 +81,10 @@ export const branches: Branch[] = [
 ];
 
 export const categories: Category[] = [
-  { _id: "cat-tees", title: "Tees", slug: "tees", order: 1 },
-  { _id: "cat-hoodies", title: "Hoodies", slug: "hoodies", order: 2 },
-  { _id: "cat-bottoms", title: "Bottoms", slug: "bottoms", order: 3 },
-  { _id: "cat-accessories", title: "Accessories", slug: "accessories", order: 4 },
+  { _id: "cat-jerseys", title: "Jerseys", slug: "jerseys", order: 1 },
+  { _id: "cat-smart-casual", title: "Smart Casual", slug: "smart-casual", order: 2 },
+  { _id: "cat-streetwear", title: "Streetwear", slug: "streetwear", order: 3 },
+  { _id: "cat-outerwear", title: "Outerwear", slug: "outerwear", order: 4 },
 ];
 
 const cat = (slug: string) => {
@@ -92,44 +92,123 @@ const cat = (slug: string) => {
   return { title: c.title, slug: c.slug };
 };
 const sizes = (out: string[] = []) => ["S", "M", "L", "XL", "XXL"].map((label) => ({ label, inStock: !out.includes(label) }));
-const oneSize = [{ label: "One size", inStock: true }];
-const black = { name: "Black", hex: "#0b0b0b" };
-const bone = { name: "Bone", hex: "#e6e0d2" };
-const olive = { name: "Olive", hex: "#545b33" };
+const c = (name: string, hex: string) => ({ name, hex });
+const black = c("Black", "#0b0b0b");
+const cream = c("Cream", "#ece4d3");
 const street = { title: "Street Season", slug: "street-season" };
 const night = { title: "Night Shift", slug: "night-shift" };
+const jersey = "Retro-inspired football jersey with a woven-pattern finish, ribbed collar and a relaxed fit.";
 
 type Seed = [id: number, name: string, slug: string, price: number, category: string, extra?: Partial<Product>];
 const seeds: Seed[] = [
-  // New drop (real photos, in display order)
-  [11, "Retro Jerseys", "retro-jerseys", 45, "tees", {
+  // ── New drop (shown on the home page, in this order)
+  [11, "Retro Jerseys", "retro-jerseys", 45, "jerseys", {
     newDrop: true,
-    colours: [{ name: "Gold", hex: "#e2b021" }],
+    colours: [c("Gold", "#e2b021")],
     images: [img("nd-retro-jerseys.jpg", "Man in a long-sleeve gold-and-green retro Brazil jersey against a red wall", 864, 1080)],
     description: "Long-sleeve retro football jerseys with a woven-pattern finish, contrast collar and striped sleeves.",
   }],
-  [12, "Classic Fit", "classic-fit", 65, "bottoms", {
+  [12, "Classic Fit", "classic-fit", 65, "smart-casual", {
     newDrop: true,
-    colours: [{ name: "Brown", hex: "#5a3a22" }, { name: "Navy", hex: "#1f2a44" }],
+    colours: [c("Brown", "#5a3a22"), c("Navy", "#1f2a44")],
+    sizes: sizes(["XL"]),
+    collection: street,
     images: [img("nd-classic-fit.jpg", "Man in a brown and navy checked knit vest, light blue shirt and brown trousers", 1000, 1250)],
     description: "Smart-casual layers: checked knit vest, crisp shirt and tailored wool-blend trousers.",
   }],
-  [13, "Streetwear Essentials", "streetwear-essentials", 55, "bottoms", {
+  [13, "Streetwear Essentials", "streetwear-essentials", 55, "streetwear", {
     newDrop: true,
-    colours: [black, { name: "Light denim", hex: "#9fb3cf" }],
+    colours: [black, c("Light denim", "#9fb3cf")],
     images: [img("nd-streetwear.jpg", "Man in a black graphic tee and baggy jeans sitting on a red block", 941, 1176)],
     description: "The everyday uniform: heavyweight graphic tee and loose, wide-leg washed denim.",
   }],
-  [1, "Oversized Tee", "oversized-tee", 25, "tees", { featured: true, colours: [black, bone, olive], sizes: sizes(["XL"]), collection: street }],
-  [2, "Cargo Pant", "cargo-pant", 45, "bottoms", { colours: [olive, black], collection: street }],
-  [3, "Heavy Hoodie", "heavy-hoodie", 52, "hoodies", { featured: true, collection: night }],
-  [4, "Bucket Hat", "bucket-hat", 18, "accessories", { sizes: oneSize }],
-  [5, "Track Jacket", "track-jacket", 60, "hoodies", { featured: true, collection: night }],
-  [6, "Sold Out Hoodie", "sold-out-hoodie", 52, "hoodies", { sizes: sizes(["S", "M", "L", "XL", "XXL"]) }],
-  [7, "Logo Tee", "logo-tee", 22, "tees", { colours: [bone, black] }],
-  [8, "Wide Denim", "wide-denim", 48, "bottoms"],
-  [9, "Tee & Co. #1", "tee-and-co-1", 24, "tees"],
-  [10, "Utility Bag", "utility-bag", 30, "accessories", { sizes: oneSize }],
+
+  // ── Jerseys
+  [21, "Sky Blue Retro Jersey", "sky-blue-retro-jersey", 40, "jerseys", {
+    featured: true,
+    colours: [c("Sky blue", "#8fbbe6")],
+    images: [img("p-sky-blue-retro-jersey.jpg", "Man holding out a sky-blue retro football jersey with navy panels, a matching shirt hanging behind him", 864, 1080)],
+    description: jersey,
+  }],
+  [22, "Navy Pinstripe Jersey", "navy-pinstripe-jersey", 40, "jerseys", {
+    colours: [c("Navy", "#1c2541")],
+    images: [img("p-navy-pinstripe-jersey.jpg", "Man sitting on the floor in a navy pinstripe football jersey with a white collar and black trousers", 720, 900)],
+    description: jersey,
+  }],
+  [23, "Claret & Blue Split Jersey", "claret-blue-split-jersey", 40, "jerseys", {
+    colours: [c("Claret & blue", "#6b1f3a")],
+    images: [
+      img("p-claret-blue-split-jersey-a.jpg", "Man in a half claret, half blue pinstripe football jersey sitting in a leather armchair", 809, 1011),
+      img("p-claret-blue-split-jersey-b.jpg", "Half claret, half blue football jersey on a hanger against a patterned wall", 736, 920),
+    ],
+    description: jersey,
+  }],
+  [24, "Black & White Retro Jersey", "black-white-retro-jersey", 40, "jerseys", {
+    colours: [black],
+    images: [img("p-black-white-retro-jersey.jpg", "Man in sunglasses wearing a black retro football jersey with white shoulder stripes, holding a gold ball", 928, 1160)],
+    description: jersey,
+  }],
+  [25, "Black & Gold Concept Jersey", "black-gold-concept-jersey", 45, "jerseys", {
+    colours: [c("Black & gold", "#1a1a1a")],
+    images: [img("p-black-gold-concept-jersey.jpg", "Black football jersey with a gold tonal pattern and blue collar on a wooden hanger", 735, 919)],
+    description: "Concept jersey with an all-over tonal pattern, contrast collar and gold detailing.",
+  }],
+  [26, "Green Tile Concept Jersey", "green-tile-concept-jersey", 45, "jerseys", {
+    colours: [c("Green", "#1f4d3a")],
+    sizes: sizes(["S", "M", "L", "XL", "XXL"]), // sample of a sold-out product
+    images: [img("p-green-tile-concept-jersey.jpg", "Dark green football jersey with a blue-and-white tile print and gold trim on a hanger", 736, 920)],
+    description: "Concept jersey with a hand-painted tile print, gold piping and a red-and-gold V-neck.",
+  }],
+  [27, "Navy & Gold Retro Jersey", "navy-gold-retro-jersey", 40, "jerseys", {
+    colours: [c("Navy & gold", "#1d2b55")],
+    images: [img("p-navy-gold-retro-jersey.jpg", "Navy retro football jersey with gold pinstripes and a gold collar on a hanger", 736, 920)],
+    description: jersey,
+  }],
+
+  // ── Smart casual
+  [31, "Colour-Block Knit Polo", "colour-block-knit-polo", 40, "smart-casual", {
+    colours: [c("Black & cream", "#ece4d3")],
+    images: [img("p-colour-block-knit-polo.jpg", "Man in sunglasses wearing a black, white and beige colour-block zip knit polo with cream trousers", 1000, 1250)],
+    description: "Fine-knit zip polo in bold colour blocks. Pair with tailored trousers and loafers.",
+  }],
+  [32, "Striped Knit Polo", "striped-knit-polo", 38, "smart-casual", {
+    colours: [c("Brown", "#4a2c1d"), cream],
+    collection: street,
+    images: [img("p-striped-knit-polo.jpg", "Man in glasses sitting on a wooden chair in a brown striped knit polo and wide cream trousers", 1000, 1250)],
+    description: "Vintage-style knit polo with cream stripes, worn with pleated wide-leg trousers.",
+  }],
+  [33, "Mandarin Collar Set", "mandarin-collar-set", 70, "smart-casual", {
+    colours: [c("Forest green", "#1d3a32")],
+    images: [img("p-mandarin-collar-set.jpg", "Man in a matching dark green mandarin-collar shirt and tapered trousers with white sneakers", 941, 1176)],
+    description: "Two-piece set: band-collar shirt with a hidden placket and matching tapered trousers.",
+  }],
+
+  // ── Streetwear
+  [41, "Monochrome Quarter-Zip", "monochrome-quarter-zip", 85, "streetwear", {
+    featured: true,
+    colours: [c("Black & white", "#0b0b0b")],
+    collection: night,
+    images: [img("p-monochrome-quarter-zip.jpg", "Black-and-white photo of a man in sunglasses wearing a black logo quarter-zip sweatshirt and wide white trousers", 1000, 1250)],
+    description: "Heavyweight quarter-zip with sleeve print, styled with wide pleated trousers and chunky loafers.",
+  }],
+  [42, "Varsity Bomber Jacket", "varsity-bomber-jacket", 60, "streetwear", {
+    colours: [black],
+    images: [img("p-varsity-bomber-jacket.jpg", "Man in a black satin varsity bomber with patches, white tee and grey joggers on yellow steps", 1000, 1250)],
+    description: "Satin bomber with embroidered patches, ribbed cuffs and a zip front.",
+  }],
+
+  // ── Outerwear
+  [51, "Wool Bomber Jacket", "wool-bomber-jacket", 75, "outerwear", {
+    featured: true,
+    colours: [c("Brown", "#5b3a24")],
+    images: [img("p-wool-bomber-jacket.jpg", "Man in a brown wool bomber jacket over a cream turtleneck with beige trousers", 941, 1176)],
+    description: "Textured wool-blend bomber with flap pockets and a ribbed hem. Layer over a knit.",
+  }],
+  [52, "Camel Wool Co-ord", "camel-wool-coord", 80, "outerwear", {
+    colours: [c("Camel", "#b39b7d")],
+    images: [img("p-camel-wool-coord.jpg", "Man in a camel wool zip jacket and matching drawstring trousers over a white tee", 1000, 1250)],
+    description: "Matching zip jacket and drawstring trousers in soft brushed wool-blend.",
+  }],
 ];
 
 export const products: Product[] = seeds.map(([id, name, slug, price, category, extra = {}]) => ({
@@ -138,10 +217,10 @@ export const products: Product[] = seeds.map(([id, name, slug, price, category, 
   slug,
   price,
   category: cat(category),
-  images: [img(`p${id}-a.jpg`, `${name} — front`), img(`p${id}-b.jpg`, `${name} — back`)],
+  images: [],
   sizes: sizes(),
   colours: [black],
-  description: "Heavyweight cotton with a boxy, dropped-shoulder fit. Built to be worn loud and washed hard.",
+  description: "",
   featured: false,
   newDrop: false,
   ...extra,
