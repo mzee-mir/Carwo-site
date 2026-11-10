@@ -16,7 +16,7 @@ export function Header({ cartSlot }: { cartSlot?: ReactNode }) {
       <div className="flex h-16 items-center justify-between px-5 md:px-12">
         <button
           type="button"
-          className="md:hidden"
+          className="-m-3 p-3 md:hidden"
           aria-label="Menu"
           aria-expanded={open}
           aria-controls="main-nav"
@@ -30,7 +30,7 @@ export function Header({ cartSlot }: { cartSlot?: ReactNode }) {
             )}
           </svg>
         </button>
-        <Link href="/" aria-label="Carwo home" className="font-display text-3xl tracking-wide">
+        <Link href="/" aria-label="Carwo home" className="py-2 font-display text-3xl tracking-wide">
           CARWO
         </Link>
         <nav
@@ -39,7 +39,7 @@ export function Header({ cartSlot }: { cartSlot?: ReactNode }) {
           className={`${open ? "flex" : "hidden"} absolute inset-x-0 top-16 flex-col gap-6 border-b border-ink-3 bg-ink px-5 py-8 md:static md:flex md:flex-row md:gap-10 md:border-0 md:bg-transparent md:p-0`}
         >
           {links.map((l) => (
-            <Link key={l.href} href={l.href} className="label hover:text-accent" onClick={() => setOpen(false)}>
+            <Link key={l.href} href={l.href} className="label py-3 hover:text-accent md:py-4" onClick={() => setOpen(false)}>
               {l.label}
             </Link>
           ))}

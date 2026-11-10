@@ -13,6 +13,8 @@ export function Reveal({ as: Tag = "div", delay = 0, variant = "fade-up", classN
     () => {
       const el = ref.current;
       if (!el) return;
+      // Content already on screen at load stays put: hiding it until JS runs would delay the page's main paint.
+      if (el.getBoundingClientRect().top < window.innerHeight) return;
       const scrollTrigger = { trigger: el, start: "top 88%", once: true };
       if (prefersReducedMotion()) {
         gsap.from(el, { opacity: 0, duration: 0.4, delay, scrollTrigger });

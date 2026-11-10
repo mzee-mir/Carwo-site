@@ -15,10 +15,9 @@ export function Hero({ image }: { image?: Img }) {
   const ref = useRef<HTMLElement>(null);
   useGSAP(
     () => {
+      // Intro (letters rising, copy fading in) is CSS so it doesn't wait for JS; GSAP only drives the scroll effects.
       if (!ref.current || prefersReducedMotion()) return;
       const letters = gsap.utils.toArray<HTMLElement>("[data-letter]");
-      gsap.from(letters, { yPercent: 110, rotate: 6, duration: 1.1, ease: "power4.out", stagger: 0.07, delay: 0.15 });
-      gsap.from("[data-hero-fade]", { y: 24, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.08, delay: 0.6 });
       const st = { trigger: ref.current, start: "top top", end: "bottom top", scrub: true };
       letters.forEach((el, i) => gsap.to(el, { xPercent: (i - (letters.length - 1) / 2) * 35, ease: "none", scrollTrigger: st }));
       gsap.to("[data-hero-media]", { yPercent: 18, scale: 1.08, ease: "none", scrollTrigger: st });
@@ -32,26 +31,28 @@ export function Hero({ image }: { image?: Img }) {
         <SanityImage image={image} sizes="(min-width: 768px) 55vw, 100vw" priority />
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent md:bg-gradient-to-r md:from-ink md:from-35% md:via-ink/70 md:to-transparent" aria-hidden />
-      <p data-hero-fade className="label absolute top-6 left-5 text-[0.75rem] text-accent md:top-12 md:left-12">
+      <p data-hero-fade style={{ "--i": 0 } as React.CSSProperties} className="intro-fade label absolute top-6 left-5 text-[0.75rem] text-accent md:top-12 md:left-12">
         Drop 01 — SS27
       </p>
-      <p data-hero-fade className="absolute top-4 right-5 font-display text-4xl text-accent md:top-10 md:right-12 md:text-7xl" aria-hidden>
+      <p data-hero-fade style={{ "--i": 1 } as React.CSSProperties} className="intro-fade absolute top-4 right-5 font-display text-4xl text-accent md:top-10 md:right-12 md:text-7xl" aria-hidden>
         01
       </p>
       <div className="relative px-5 pb-8 md:px-12 md:pb-14">
         <h1 aria-label="Carwo" className="flex font-display text-[36vw] leading-[0.8] md:text-[30vw] lg:text-[26rem]">
           {LETTERS.map((l, i) => (
             <span key={i} className="-my-[0.06em] inline-block overflow-hidden py-[0.06em]" aria-hidden>
-              <span data-letter className="inline-block">
-                {l}
+              <span className="intro-rise inline-block" style={{ "--i": i } as React.CSSProperties}>
+                <span data-letter className="inline-block">
+                  {l}
+                </span>
               </span>
             </span>
           ))}
         </h1>
-        <p data-hero-fade className="mt-4 max-w-md text-base md:mt-6 md:text-lg">
+        <p data-hero-fade style={{ "--i": 2 } as React.CSSProperties} className="intro-fade mt-4 max-w-md text-base md:mt-6 md:text-lg">
           Streetwear built loud. Heavyweight cuts for the city — browse, bag it, and order straight on WhatsApp.
         </p>
-        <div data-hero-fade className="mt-6 flex flex-col gap-3 sm:flex-row md:mt-8">
+        <div data-hero-fade style={{ "--i": 3 } as React.CSSProperties} className="intro-fade mt-6 flex flex-col gap-3 sm:flex-row md:mt-8">
           <MagneticButton>
             <Link href="/shop" className="label flex items-center justify-center gap-3 bg-accent px-7 py-4.5 text-ink">
               Shop the drop <span aria-hidden>→</span>

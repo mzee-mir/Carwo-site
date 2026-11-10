@@ -6,7 +6,7 @@ import { SplitText } from "@/components/motion/SplitText";
 import { getStories } from "@/lib/sanity/data";
 
 export const revalidate = 60;
-export const metadata: Metadata = { title: "Lookbook | Carwo", description: "Carwo collections, shot on the streets." };
+export const metadata: Metadata = { title: "Lookbook", description: "Carwo collections, shot on the streets." };
 
 export default async function LookbookPage() {
   const stories = await getStories();

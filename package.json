@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "lighthouse": "node scripts/lighthouse.mjs http://localhost:3000 / /shop /product/oversized-tee /lookbook /about"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -38,6 +39,7 @@
     "eslint": "^9",
     "eslint-config-next": "^16.4.6",
     "jsdom": "^31.0.0",
+    "lighthouse": "^12.8.2",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^5.1.0"

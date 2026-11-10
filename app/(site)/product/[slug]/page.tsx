@@ -18,9 +18,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const product = await getProduct((await params).slug);
-  if (!product) return { title: "Not found | Carwo" };
+  if (!product) return { title: "Not found" };
   return {
-    title: `${product.name} | Carwo`,
+    title: product.name,
     description: product.description,
     openGraph: { images: product.images[0] ? [{ url: product.images[0].url, alt: product.images[0].alt }] : undefined },
   };

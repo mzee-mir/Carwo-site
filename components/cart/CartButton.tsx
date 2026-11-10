@@ -11,7 +11,7 @@ export function CartButton() {
   useEffect(() => setMounted(true), []);
   const count = mounted ? cartCount(lines) : 0;
   return (
-    <button type="button" onClick={open} aria-label={`Cart, ${count} ${count === 1 ? "item" : "items"}`} className="flex items-center gap-1.5">
+    <button type="button" onClick={open} aria-label={`Cart, ${count} ${count === 1 ? "item" : "items"}`} className="-m-3 flex items-center gap-1.5 p-3">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
         <path d="M6 7h12l1 14H5L6 7Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
         <path d="M9 7a3 3 0 0 1 6 0" stroke="currentColor" strokeWidth="2" />

@@ -5,7 +5,7 @@ import { SplitText } from "@/components/motion/SplitText";
 import { getCategories, getProducts, getSettings } from "@/lib/sanity/data";
 
 export const revalidate = 60;
-export const metadata: Metadata = { title: "Shop | Carwo", description: "Tees, hoodies, bottoms and accessories from Carwo." };
+export const metadata: Metadata = { title: "Shop", description: "Tees, hoodies, bottoms and accessories from Carwo." };
 
 export default async function ShopPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
   const { category } = await searchParams;

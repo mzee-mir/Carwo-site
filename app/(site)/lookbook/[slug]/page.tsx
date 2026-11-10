@@ -14,8 +14,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const story = await getStory((await params).slug);
-  if (!story) return { title: "Not found | Carwo" };
-  return { title: `${story.title} | Carwo`, description: story.intro, openGraph: { images: [{ url: story.cover.url, alt: story.cover.alt }] } };
+  if (!story) return { title: "Not found" };
+  return { title: story.title, description: story.intro, openGraph: { images: [{ url: story.cover.url, alt: story.cover.alt }] } };
 }
 
 export default async function StoryPage({ params }: Params) {
