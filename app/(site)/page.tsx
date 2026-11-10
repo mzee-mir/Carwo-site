@@ -1,7 +1,20 @@
-export default function HomePage() {
+import { Hero } from "@/components/home/Hero";
+import { FeaturedCollections, LookbookTeaser, NewDropStrip, SocialCta } from "@/components/home/Sections";
+import { Marquee } from "@/components/motion/Marquee";
+import { getProducts, getSettings, getStories } from "@/lib/sanity/data";
+
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const [settings, newDrop, stories] = await Promise.all([getSettings(), getProducts({ newDrop: true }), getStories()]);
   return (
-    <section className="px-5 py-24 md:px-12">
-      <h1 className="font-display text-7xl md:text-9xl">CARWO</h1>
-    </section>
+    <>
+      <Hero image={settings.heroImage} />
+      <Marquee items={["New drop out now", "Order on WhatsApp", "Pickup in store"]} />
+      <NewDropStrip products={newDrop} symbol={settings.currencySymbol} />
+      <FeaturedCollections stories={stories} />
+      <LookbookTeaser story={stories[0]} />
+      <SocialCta settings={settings} />
+    </>
   );
 }
