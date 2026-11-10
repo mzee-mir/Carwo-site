@@ -1,4 +1,4 @@
-import type { Category, Img, LookbookStory, Product, SiteSettings } from "../types";
+import type { Branch, Category, Img, LookbookStory, Product, SiteSettings } from "../types";
 
 const img = (file: string, alt: string, width = 800, height = 1000): Img => ({ url: `/fixtures/${file}`, alt, width, height });
 
@@ -13,6 +13,21 @@ export const settings: SiteSettings = {
   mapUrl: "https://www.google.com/maps/search/?api=1&query=11.284851,49.177534",
   hours: "Mon–Sat · 10am–8pm",
 };
+
+export const branches: Branch[] = [
+  {
+    _id: "branch-bosaso",
+    name: "Carwo Bosaso",
+    city: "Bosaso",
+    address: "Bosaso, Somalia",
+    lat: 11.284851,
+    lng: 49.177534,
+    phone: "+252 61 000 0000",
+    whatsappNumber: "+252 61 000 0000",
+    hours: "Mon–Sat · 10am–8pm",
+    isMain: true,
+  },
+];
 
 export const categories: Category[] = [
   { _id: "cat-tees", title: "Tees", slug: "tees", order: 1 },

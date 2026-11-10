@@ -1,8 +1,13 @@
 import type { CartLine } from "./cart/types";
 import { formatPrice } from "./format";
-import type { Product, SiteSettings } from "./types";
+import type { Branch, Product, SiteSettings } from "./types";
 
-export type OrderCustomer = { name?: string; method?: "Delivery" | "Pickup" };
+export type OrderCustomer = { name?: string; method?: "Delivery" | "Pickup"; branch?: string };
+
+/** The number an order goes to: the chosen branch's WhatsApp, else the shop's main number, else none. */
+export function orderNumberFor(branch: Pick<Branch, "whatsappNumber"> | undefined, settings: SiteSettings): string | null {
+  return normalizeWhatsAppNumber(branch?.whatsappNumber) ?? normalizeWhatsAppNumber(settings.whatsappNumber);
+}
 
 export function normalizeWhatsAppNumber(raw?: string): string | null {
   const digits = (raw ?? "").replace(/\D/g, "");
@@ -17,6 +22,7 @@ export function buildOrderMessage(lines: CartLine[], customer: OrderCustomer, se
     ...available.map((l) => `${l.quantity}× ${l.name} — ${l.colour} — ${l.size} — ${formatPrice(l.quantity * l.unitPrice, settings)}`),
     `Total: ${formatPrice(total, settings)}`,
   ];
+  if (customer.branch) out.push(`Branch: ${customer.branch}`);
   const name = customer.name?.trim();
   if (name) out.push(`Name: ${name}`);
   if (customer.method) out.push(`Delivery/Pickup: ${customer.method}`);

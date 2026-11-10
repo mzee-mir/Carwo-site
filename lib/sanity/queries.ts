@@ -24,6 +24,9 @@ export const SETTINGS_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
   whatsappNumber, "currencyCode": coalesce(currencyCode, "USD"), "currencySymbol": coalesce(currencySymbol, "$"),
   instagramUrl, "heroImage": heroImage${IMG}, announcement, address, mapUrl, hours
 }`);
+export const BRANCHES_QUERY = defineQuery(`*[_type == "branch"] | order(coalesce(isMain, false) desc, name asc){
+  _id, name, city, address, "lat": location.lat, "lng": location.lng, phone, whatsappNumber, hours, "isMain": coalesce(isMain, false)
+}`);
 export const CATEGORIES_QUERY = defineQuery(`*[_type == "category"] | order(order asc){ _id, title, "slug": slug.current, order }`);
 export const PRODUCTS_QUERY = defineQuery(`*[_type == "product"
   && (!defined($category) || category->slug.current == $category)

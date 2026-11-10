@@ -5,11 +5,11 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { reconcileCart } from "@/lib/cart/reconcile";
 import { cartCount, useCart } from "@/lib/cart/store";
-import type { Product, SiteSettings } from "@/lib/types";
+import type { Branch, Product, SiteSettings } from "@/lib/types";
 import { CartLineRow } from "./CartLineRow";
 import { OrderForm } from "./OrderForm";
 
-export function CartDrawer({ settings }: { settings: SiteSettings }) {
+export function CartDrawer({ settings, branches = [] }: { settings: SiteSettings; branches?: Branch[] }) {
   const { lines, isOpen, close, setLines } = useCart();
   const [notices, setNotices] = useState<string[]>([]);
   const panel = useRef<HTMLDivElement>(null);
@@ -121,7 +121,7 @@ export function CartDrawer({ settings }: { settings: SiteSettings }) {
                     <CartLineRow key={l.key} line={l} symbol={settings.currencySymbol} onNavigate={close} />
                   ))}
                 </ul>
-                <OrderForm lines={lines} settings={settings} />
+                <OrderForm lines={lines} settings={settings} branches={branches} />
               </>
             )}
           </motion.div>

@@ -25,6 +25,18 @@ export type LookbookStory = {
   intro?: string;
   slides: { image: Img; caption?: string }[];
 };
+export type Branch = {
+  _id: string;
+  name: string;
+  city?: string;
+  address?: string;
+  lat?: number;
+  lng?: number;
+  phone?: string;
+  whatsappNumber?: string;
+  hours?: string;
+  isMain: boolean;
+};
 export type SiteSettings = {
   whatsappNumber?: string;
   currencyCode: string;

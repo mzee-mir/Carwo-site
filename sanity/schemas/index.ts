@@ -45,6 +45,23 @@ export const lookbookStory = defineType({
   ],
 });
 
+export const branch = defineType({
+  name: "branch",
+  title: "Branch / office",
+  type: "document",
+  fields: [
+    defineField({ name: "name", type: "string", description: "e.g. Carwo Bosaso", validation: (r) => r.required() }),
+    defineField({ name: "city", type: "string" }),
+    defineField({ name: "address", type: "string", description: "Street, area, landmark" }),
+    defineField({ name: "location", title: "Map pin", type: "geopoint", description: "Drop the pin on the shop so 'Open in Maps' is exact" }),
+    defineField({ name: "phone", type: "string" }),
+    defineField({ name: "whatsappNumber", title: "WhatsApp number", type: "string", description: "Orders for this branch go here. International format, e.g. +252 61 234 5678. Leave empty to use the main shop number." }),
+    defineField({ name: "hours", title: "Opening hours", type: "string", description: "e.g. Sat–Thu · 9am–9pm" }),
+    defineField({ name: "isMain", title: "Main shop", type: "boolean", initialValue: false, description: "The main shop is listed first and pre-selected in the cart" }),
+  ],
+  preview: { select: { title: "name", subtitle: "city" } },
+});
+
 export const siteSettings = defineType({
   name: "siteSettings",
   title: "Site settings",
@@ -63,4 +80,4 @@ export const siteSettings = defineType({
   preview: { prepare: () => ({ title: "Site settings" }) },
 });
 
-export const schemaTypes = [product, category, lookbookStory, siteSettings];
+export const schemaTypes = [product, category, lookbookStory, branch, siteSettings];

@@ -29,6 +29,7 @@ export default defineConfig({
             S.documentTypeListItem("product").title("Products"),
             S.documentTypeListItem("category").title("Categories"),
             S.documentTypeListItem("lookbookStory").title("Collections / Lookbook"),
+            S.documentTypeListItem("branch").title("Branches / offices"),
           ]),
     }),
   ],

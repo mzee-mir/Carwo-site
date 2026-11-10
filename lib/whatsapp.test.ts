@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { CartLine } from "./cart/types";
 import type { SiteSettings } from "./types";
-import { buildOrderMessage, buildProductEnquiry, buildWhatsAppUrl, normalizeWhatsAppNumber } from "./whatsapp";
+import { buildOrderMessage, buildProductEnquiry, buildWhatsAppUrl, normalizeWhatsAppNumber, orderNumberFor } from "./whatsapp";
 
 const settings: SiteSettings = { currencyCode: "KES", currencySymbol: "KSh", whatsappNumber: "+254 700 000 000" };
 const line = (name: string, colour: string, size: string, quantity: number, unitPrice: number, extra: Partial<CartLine> = {}): CartLine => ({
@@ -29,6 +29,20 @@ describe("buildOrderMessage", () => {
     const msg = buildOrderMessage([...lines, line("Hoodie", "Black", "S", 1, 5000, { unavailable: true })], {}, settings);
     expect(msg).not.toContain("Hoodie");
     expect(msg).toContain("Total: KSh 11,500");
+  });
+});
+
+describe("branch in the order", () => {
+  it("adds the chosen branch before the name", () => {
+    const msg = buildOrderMessage(lines, { branch: "Carwo Bosaso", name: "Amina" }, settings);
+    expect(msg.endsWith("Total: KSh 11,500\nBranch: Carwo Bosaso\nName: Amina")).toBe(true);
+  });
+
+  it("sends to the branch's own WhatsApp, falling back to the main number", () => {
+    expect(orderNumberFor({ whatsappNumber: "+252 61 111 2222" }, settings)).toBe("252611112222");
+    expect(orderNumberFor({ whatsappNumber: "" }, settings)).toBe("254700000000");
+    expect(orderNumberFor(undefined, settings)).toBe("254700000000");
+    expect(orderNumberFor(undefined, { ...settings, whatsappNumber: undefined })).toBeNull();
   });
 });
 

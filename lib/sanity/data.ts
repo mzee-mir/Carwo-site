@@ -1,4 +1,4 @@
-import type { Category, LookbookStory, Product, SiteSettings } from "../types";
+import type { Branch, Category, LookbookStory, Product, SiteSettings } from "../types";
 import { client } from "./client";
 import * as fx from "./fixtures";
 import * as q from "./queries";
@@ -12,6 +12,12 @@ async function fetchSanity<T>(query: string, params: Record<string, unknown> = {
 export async function getSettings(): Promise<SiteSettings> {
   if (useFixtures()) return fx.settings;
   return (await fetchSanity<SiteSettings | null>(q.SETTINGS_QUERY)) ?? { currencyCode: "USD", currencySymbol: "$" };
+}
+
+/** All branches, main shop first. */
+export async function getBranches(): Promise<Branch[]> {
+  if (useFixtures()) return fx.branches;
+  return fetchSanity<Branch[]>(q.BRANCHES_QUERY);
 }
 
 export async function getCategories(): Promise<Category[]> {
