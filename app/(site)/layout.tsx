@@ -1,14 +1,18 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
+import { getSettings } from "@/lib/sanity/data";
 
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
+export const revalidate = 60;
+
+export default async function SiteLayout({ children }: { children: React.ReactNode }) {
+  const settings = await getSettings();
   return (
     <>
-      <AnnouncementBar text="Drop 01 out now ✦ Order on WhatsApp" />
+      <AnnouncementBar text={settings.announcement} />
       <Header />
       <main>{children}</main>
-      <Footer />
+      <Footer settings={settings} />
       <div className="grain" aria-hidden />
     </>
   );
