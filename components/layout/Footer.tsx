@@ -1,8 +1,9 @@
 import Link from "next/link";
 import type { SiteSettings } from "@/lib/types";
+import { normalizeWhatsAppNumber } from "@/lib/whatsapp";
 
 export function Footer({ settings }: { settings: SiteSettings }) {
-  const wa = settings.whatsappNumber?.replace(/\D/g, "");
+  const wa = normalizeWhatsAppNumber(settings.whatsappNumber);
   return (
     <footer className="border-t border-ink-3 px-5 pt-16 pb-8 md:px-12">
       <div className="grid gap-10 md:grid-cols-3">
