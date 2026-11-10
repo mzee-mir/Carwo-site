@@ -54,6 +54,7 @@ export type SiteSettings = {
   currencySymbol: string;
   instagramUrl?: string;
   heroImage?: Img;
+  heroVideo?: { url: string; mimeType?: string };
   announcement?: string;
   address?: string;
   mapUrl?: string;

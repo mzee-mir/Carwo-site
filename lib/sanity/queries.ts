@@ -22,7 +22,8 @@ const STORY = `{
 
 export const SETTINGS_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
   whatsappNumber, "currencyCode": coalesce(currencyCode, "USD"), "currencySymbol": coalesce(currencySymbol, "$"),
-  instagramUrl, "heroImage": heroImage${IMG}, announcement, address, mapUrl, hours
+  instagramUrl, "heroImage": heroImage${IMG}, "heroVideo": select(defined(heroVideo.asset) => { "url": heroVideo.asset->url, "mimeType": heroVideo.asset->mimeType }, null),
+  announcement, address, mapUrl, hours
 }`);
 const POST = `{ _id, title, "slug": slug.current, "publishedAt": coalesce(publishedAt, _createdAt), excerpt, "cover": cover${IMG}, "body": coalesce(body, []) }`;
 export const POSTS_QUERY = defineQuery(`*[_type == "post" && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc)${POST}`);

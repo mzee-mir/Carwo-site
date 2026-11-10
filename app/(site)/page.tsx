@@ -9,7 +9,7 @@ export default async function HomePage() {
   const [settings, newDrop, stories] = await Promise.all([getSettings(), getProducts({ newDrop: true }), getStories()]);
   return (
     <>
-      <Hero image={settings.heroImage} />
+      <Hero image={settings.heroImage} video={settings.heroVideo} />
       <Marquee items={["New drop out now", "Order on WhatsApp", "Pickup in store"]} />
       <NewDropStrip products={newDrop} symbol={settings.currencySymbol} />
       <FeaturedCollections stories={stories} />

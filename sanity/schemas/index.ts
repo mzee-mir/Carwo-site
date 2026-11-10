@@ -96,6 +96,14 @@ export const siteSettings = defineType({
     defineField({ name: "currencySymbol", type: "string", initialValue: "$" }),
     defineField({ name: "instagramUrl", title: "Instagram link", type: "url" }),
     imageWithAlt("heroImage", "Home page hero photo"),
+    defineField({
+      name: "heroVideo",
+      title: "Home page hero video (optional)",
+      type: "file",
+      options: { accept: "video/mp4,video/webm" },
+      description:
+        "Plays silently on a loop over the hero photo. MP4, 6–10 seconds, 1080p max, under 4 MB, no sound. The photo above is still required — it shows while the video loads and on slow connections.",
+    }),
     defineField({ name: "announcement", title: "Announcement bar text", type: "string" }),
     defineField({ name: "address", type: "string" }),
     defineField({ name: "mapUrl", title: "Google Maps link", type: "url" }),

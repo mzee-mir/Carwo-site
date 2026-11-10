@@ -8,6 +8,7 @@ export const settings: SiteSettings = {
   currencySymbol: "$",
   instagramUrl: "https://instagram.com/carwo",
   heroImage: img("hero.jpg", "Model wearing the Carwo Oversized Tee on a city street", 1600, 1000),
+  heroVideo: { url: "/fixtures/hero.webm", mimeType: "video/webm" }, // placeholder loop from scripts/make-hero-video.mjs
   announcement: "Drop 01 out now ✦ Order on WhatsApp",
   address: "Bosaso, Somalia",
   mapUrl: "https://www.google.com/maps/search/?api=1&query=11.284851,49.177534",

@@ -1,17 +1,44 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP } from "@/components/motion/gsap";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { prefersReducedMotion } from "@/components/motion/useMotionPrefs";
 import { SanityImage } from "@/components/shop/SanityImage";
-import type { Img } from "@/lib/types";
+import type { Img, SiteSettings } from "@/lib/types";
+import { readConnection, shouldPlayHeroVideo } from "./heroVideo";
 
 const LETTERS = "CARWO".split("");
 
 /** Giant CARWO wordmark: letters fly in on load, then spread apart as you scroll over a slow-drifting photo. */
-export function Hero({ image }: { image?: Img }) {
+/**
+ * Silent looping video layered over the hero photo. It is only added after mount when the connection allows it,
+ * and stays invisible until it actually plays — so the photo is what loads first and what shows if anything fails.
+ */
+function HeroVideo({ video }: { video: NonNullable<SiteSettings["heroVideo"]> }) {
+  const [allowed, setAllowed] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  useEffect(() => setAllowed(shouldPlayHeroVideo(readConnection())), []);
+  if (!allowed) return null;
+  return (
+    <video
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      aria-hidden="true"
+      tabIndex={-1}
+      onPlaying={() => setPlaying(true)}
+      className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${playing ? "opacity-100" : "opacity-0"}`}
+    >
+      <source src={video.url} type={video.mimeType ?? "video/mp4"} />
+    </video>
+  );
+}
+
+export function Hero({ image, video }: { image?: Img; video?: SiteSettings["heroVideo"] }) {
   const ref = useRef<HTMLElement>(null);
   useGSAP(
     () => {
@@ -29,6 +56,7 @@ export function Hero({ image }: { image?: Img }) {
     <section ref={ref} aria-label="Intro" className="relative flex h-[calc(100svh-6rem)] min-h-[620px] flex-col justify-end overflow-hidden">
       <div data-hero-media className="absolute inset-0 md:left-[47%]">
         <SanityImage image={image} sizes="(min-width: 768px) 55vw, 100vw" priority />
+        {video && <HeroVideo video={video} />}
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent md:bg-gradient-to-r md:from-ink md:from-35% md:via-ink/70 md:to-transparent" aria-hidden />
       <p data-hero-fade style={{ "--i": 0 } as React.CSSProperties} className="intro-fade label absolute top-6 left-5 text-[0.75rem] text-accent md:top-12 md:left-12">
