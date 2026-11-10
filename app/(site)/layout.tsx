@@ -5,6 +5,7 @@ import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { Cursor } from "@/components/motion/Cursor";
 import { getSettings } from "@/lib/sanity/data";
+import { CartButton } from "@/components/cart/CartButton";
 
 export const revalidate = 60;
 
@@ -13,7 +14,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   return (
     <SmoothScroll>
       <AnnouncementBar text={settings.announcement} />
-      <Header />
+      <Header cartSlot={<CartButton />} />
       <main>
         <PageTransition>{children}</PageTransition>
       </main>
