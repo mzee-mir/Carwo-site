@@ -15,6 +15,18 @@ test("news page lists posts and opens one", async ({ page }) => {
   await expect(page.getByRole("link", { name: "← All news" })).toHaveAttribute("href", "/news");
 });
 
+test("news posts use the new shop photos as covers", async ({ page }) => {
+  for (const [slug, file] of [
+    ["our-bosaso-shop-is-open", "news-bosaso-shop.jpg"],
+    ["drop-01-is-here", "news-drop-01.jpg"],
+  ]) {
+    await page.goto(`/news/${slug}`);
+    const cover = page.getByRole("main").getByRole("img").first();
+    await expect.poll(() => cover.evaluate((i: HTMLImageElement) => decodeURIComponent(i.currentSrc || i.src)), slug).toContain(file);
+    await expect.poll(() => cover.evaluate((i: HTMLImageElement) => i.complete && i.naturalWidth), slug).toBeGreaterThan(0);
+  }
+});
+
 test("unknown post returns 404", async ({ page }) => {
   const res = await page.goto("/news/nope");
   expect(res?.status()).toBe(404);

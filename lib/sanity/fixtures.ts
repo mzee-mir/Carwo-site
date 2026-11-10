@@ -30,7 +30,7 @@ export const posts: Post[] = [
     slug: "drop-01-is-here",
     publishedAt: "2026-11-01",
     excerpt: "Retro jerseys, smart-casual layers and streetwear staples — the first drop is in store and online now.",
-    cover: img("shop-hero.jpg", "Pieces from Carwo Drop 01 in the shop", 1672, 941),
+    cover: img("news-drop-01.jpg", "Lime-lit wall of jackets, tops and trousers under a glowing Carwo Wear The Future sign", 1448, 1086),
     body: [
       block("Drop 01 is finally here. Ten pieces, built heavy and cut loose, made for the streets of Bosaso."),
       block("What's in the drop", "h2"),
@@ -57,7 +57,7 @@ export const posts: Post[] = [
     slug: "our-bosaso-shop-is-open",
     publishedAt: "2026-09-30",
     excerpt: "Come through, try everything on, and say hello. Our first shop is now open in Bosaso.",
-    cover: img("shop-hero.jpg", "Inside the Carwo shop", 1672, 941),
+    cover: img("news-bosaso-shop.jpg", "Inside the Carwo shop: lime-lit racks of jackets, a mannequin in jeans and a Carwo Wear The Future sign", 1254, 1254),
     body: [
       block("Carwo Bosaso is open. It's our first shop and the home of everything we make."),
       block("Find us on the map from the About page, or message us on WhatsApp and we'll send you directions."),
