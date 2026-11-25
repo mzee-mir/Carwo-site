@@ -35,8 +35,9 @@ export const CATEGORIES_QUERY = defineQuery(`*[_type == "category"] | order(orde
 export const PRODUCTS_QUERY = defineQuery(`*[_type == "product"
   && (!defined($category) || category->slug.current == $category)
   && (!defined($featured) || featured == $featured)
-  && (!defined($newDrop) || newDrop == $newDrop)] | order(_createdAt desc)${PRODUCT}`);
+  && (!defined($newDrop) || newDrop == $newDrop)] | order(coalesce(order, 0) asc, _createdAt desc)${PRODUCT}`);
 export const PRODUCT_QUERY = defineQuery(`*[_type == "product" && slug.current == $slug][0]${PRODUCT}`);
 export const PRODUCTS_BY_IDS_QUERY = defineQuery(`*[_type == "product" && _id in $ids]${PRODUCT}`);
-export const STORIES_QUERY = defineQuery(`*[_type == "lookbookStory"] | order(_createdAt desc)${STORY}`);
+// Position ("order") sorts lowest first; items without one (just added) come first, newest first.
+export const STORIES_QUERY = defineQuery(`*[_type == "lookbookStory"] | order(coalesce(order, 0) asc, _createdAt desc)${STORY}`);
 export const STORY_QUERY = defineQuery(`*[_type == "lookbookStory" && slug.current == $slug][0]${STORY}`);

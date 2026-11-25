@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "e2e": "playwright test",
-    "lighthouse": "node scripts/lighthouse.mjs http://localhost:3000 / /shop /product/classic-fit /lookbook /about"
+    "lighthouse": "node scripts/lighthouse.mjs http://localhost:3000 / /shop /product/classic-fit /lookbook /about",
+    "seed": "sanity exec scripts/seed-sanity.ts --with-user-token"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -38,6 +39,7 @@
     "@vitejs/plugin-react": "^6.3.0",
     "eslint": "^9",
     "eslint-config-next": "^16.4.6",
+    "groq-js": "^2.0.3",
     "jsdom": "^31.0.0",
     "lighthouse": "^12.8.2",
     "tailwindcss": "^4",

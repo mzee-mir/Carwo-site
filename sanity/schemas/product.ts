@@ -57,6 +57,12 @@ export const product = defineType({
     defineField({ name: "description", type: "text", rows: 4 }),
     defineField({ name: "featured", type: "boolean", initialValue: false }),
     defineField({ name: "newDrop", title: "New drop", type: "boolean", initialValue: false }),
+    defineField({
+      name: "order",
+      title: "Position",
+      type: "number",
+      description: "Optional. Lower numbers show first in the shop and New Drop row. Leave empty to show a new product at the top.",
+    }),
   ],
   preview: { select: { title: "name", subtitle: "price", media: "images.0" } },
 });

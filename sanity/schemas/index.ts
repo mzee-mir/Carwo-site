@@ -29,6 +29,7 @@ export const lookbookStory = defineType({
     defineField({ name: "slug", type: "slug", options: { source: "title" }, validation: (r) => r.required() }),
     imageWithAlt("cover", "Cover photo"),
     defineField({ name: "season", type: "string", description: "e.g. SS27" }),
+    defineField({ name: "order", title: "Position", type: "number", description: "Optional. Lower numbers show first on the Lookbook page." }),
     defineField({ name: "intro", type: "text", rows: 3 }),
     defineField({
       name: "slides",
